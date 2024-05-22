@@ -1,0 +1,24 @@
+services:
+  node-cli:
+    build: docker/development/node/
+    working_dir: /app/
+    volumes:
+      - .:/app/
+
+  dev:
+    build: docker/development/node/
+    working_dir: /app/
+    volumes:
+      - .:/app/
+    ports:
+      - '9098:80'
+    command: pnpm run dev
+
+  example-dev:
+    build: docker/development/node/
+    working_dir: /app/
+    volumes:
+      - .:/app/
+    ports:
+      - '9098:80'
+    command: pnpm dlx turbo run dev --filter example

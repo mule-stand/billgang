@@ -1,0 +1,24 @@
+{
+  "name": "billgang",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "publish-packages": "turbo run build lint test && changeset version && changeset publish"
+  },
+  "devDependencies": {
+    "@billgang/eslint-config": "workspace:*",
+    "@billgang/typescript-config": "workspace:*",
+    "prettier": "^3.2.5",
+    "tsup": "^8.0.2",
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.27.3"
+  }
+}
