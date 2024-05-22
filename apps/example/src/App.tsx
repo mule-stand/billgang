@@ -1,10 +1,10 @@
-import { Button } from '@billgang/ui/button'
+import { Dashboard } from '@billgang/dashboard'
 
 function App() {
   return (
-    <div>
-      <Button appName={'Demo'}>LOL</Button>
-    </div>
+    <>
+      <Dashboard/>
+    </>
   )
 }
 
