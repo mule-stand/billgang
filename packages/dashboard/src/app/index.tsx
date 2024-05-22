@@ -7,7 +7,7 @@ import { Orders } from '../pages/orders/index.js'
 import { Balance } from '../pages/balance/index.js'
 import { Rewards } from '../pages/rewards/index.js'
 import { Routes } from './routes.js'
-import './index.css'
+import '../tailwind/index.css'
 const Template = () => <div>Template</div>
 
 export const routeAtom = atom<Routes>(Routes.Home)

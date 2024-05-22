@@ -1,8 +1,10 @@
 // import { AreaChart, Area, CartesianGrid, ResponsiveContainer } from "recharts";
 
-const ChartItem = ({ 
-  // data, title, value 
-}) => {
+const ChartItem = (
+  {
+    // data, title, value
+  },
+) => {
   return (
     <div className="flex flex-col justify-between rounded-[12px] border-[1px] border-borderDefault p-[24px]">
       {/* <div className="text-textSecondary">{title}</div>

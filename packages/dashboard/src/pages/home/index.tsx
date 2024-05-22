@@ -14,7 +14,7 @@ import { Star } from '../../assets/icons/star.js'
 import ChartItem from '../../components/ChartItem/index.js'
 import ReferralBlock from '../../components/ReferralBlock/index.js'
 import StatItem from '../../components/StatItem/index.js'
-import {LoadingSpinner} from '../../common/LoadingSpinner.js'
+import { LoadingSpinner } from '../../common/LoadingSpinner.js'
 
 import { getHome } from './model.js'
 import {

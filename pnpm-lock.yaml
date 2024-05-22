@@ -88,9 +88,6 @@ importers:
       '@reatom/npm-react':
         specifier: ^3.8.6
         version: 3.8.6(react@18.3.1)
-      '@turbo/gen':
-        specifier: ^1.12.4
-        version: 1.13.3(@swc/core@1.5.7)(@types/node@20.12.12)(typescript@5.4.5)
       '@types/eslint':
         specifier: ^8.56.5
         version: 8.56.10

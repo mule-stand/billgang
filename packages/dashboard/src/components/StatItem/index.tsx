@@ -1,11 +1,11 @@
 import IconWrapper from '../../common/IconWrapper.js'
 
 interface StatItemProps {
-  Icon: React.FunctionComponent;
-  title: string;
-  value: string | number;
-  image?: string;
-  imageName?: string;
+  Icon: React.FunctionComponent
+  title: string
+  value: string | number
+  image?: string
+  imageName?: string
   // imageDesc?: string;
 }
 
@@ -43,4 +43,4 @@ const StatItem: React.FC<StatItemProps> = ({
   </div>
 )
 
-export default StatItem;
+export default StatItem

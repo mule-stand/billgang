@@ -7,9 +7,7 @@ const ReferralBlock = () => (
     <div className="mb-[12px] text-textSecondary">
       Refer friends. Earn rewards. Make bank.
     </div>
-    <div className="mb-[24px]">
-      {/* <ReferralModal /> */}
-    </div>
+    <div className="mb-[24px]">{/* <ReferralModal /> */}</div>
     <ReferralList />
   </div>
 )
