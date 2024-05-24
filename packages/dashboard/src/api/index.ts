@@ -3,7 +3,6 @@ import { escape } from 'querystring'
 const customerToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY3NjQ1MSIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTExMTYxOX0.L-3B2deA2RVzBPrGWxMEGkTgq6wX-yafMhpSSp7EvQM'
 const shopId = '15124f8d-2c8c-4dda-a04c-31c16816f9b6'
-const PageSize = '10'
 const defaultOptions = {
   headers: {
     Authorization: `Bearer ${customerToken}`,
@@ -50,9 +49,9 @@ async function request(baseURL: string, options: FetchOptions = {}) {
 
 export const fetchDashInfo = () => request('customers/dash/info')
 export const fetchHome = () => request('customers/dash/dashboard/home')
-export const fetchOrders = async (PageNumber: string) => {
+export const fetchOrders = async (PageNumber: string, PageSize: string) => {
   const res = await request('customers/orders', {
-    params: { PageSize, PageNumber },
+    params: { PageNumber, PageSize },
     returnHeaders: true,
   })
   const totalCount = res.headers.get('x-pagination-total')

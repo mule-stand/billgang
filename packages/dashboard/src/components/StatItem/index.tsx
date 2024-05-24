@@ -1,4 +1,4 @@
-import IconWrapper from '../../common/IconWrapper.js'
+import { IconWrapper } from '../../common/IconWrapper.js'
 
 interface StatItemProps {
   Icon: React.FunctionComponent

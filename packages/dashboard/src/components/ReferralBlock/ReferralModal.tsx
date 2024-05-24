@@ -1,9 +1,9 @@
 // import { Modal, Label } from 'flowbite-react'
 // import { useState } from 'react'
 
-// import { Info } from '../../assets/icons/info.js'
-// import Button from '../../common/Button.js'
-// import Input from '../../common/Input.js'
+// import { Info } from '../../assets/icons.js'
+// import {Button} from '../../common/Button.js'
+// import {Input} from '../../common/Input.js'
 
 // const customTheme = {
 //   content: {

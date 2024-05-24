@@ -1,13 +1,14 @@
 import { reatomComponent, useAtom } from '@reatom/npm-react'
-
-import { Dollar } from '../../assets/icons/dollar.js'
-import { Heart } from '../../assets/icons/heart.js'
-import { Home } from '../../assets/icons/home.js'
-import { Logout } from '../../assets/icons/logout.js'
-import { Medal } from '../../assets/icons/medal.js'
-import { Question } from '../../assets/icons/question.js'
-import { Wallet } from '../../assets/icons/wallet.js'
-import IconWrapper from '../../common/IconWrapper.js'
+import {
+  Dollar,
+  Heart,
+  Home,
+  Logout,
+  Medal,
+  Question,
+  Wallet,
+} from '../../assets/icons.js'
+import { IconWrapper } from '../../common/IconWrapper.js'
 import { routeAtom } from '../../app/index.js'
 import { Routes } from '../../app/routes.js'
 

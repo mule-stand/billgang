@@ -1,5 +1,5 @@
 type ClassName = string | undefined | false | null
-type Price = {
+export type Price = {
   amount: number
   currency?: string
   quantity?: number
@@ -38,4 +38,22 @@ export const formatTimestamp = (timestamp: number) => {
     month: 'short',
     day: 'numeric',
   })
+}
+export const extractDateAndTime = (isoTime: string) => {
+  let date = new Date(isoTime)
+  let dateOptions: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }
+  let timeOptions: Intl.DateTimeFormatOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+  }
+  let formattedDate = new Intl.DateTimeFormat('en-US', dateOptions).format(date)
+  let formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date)
+  return {
+    date: formattedDate,
+    time: formattedTime,
+  }
 }

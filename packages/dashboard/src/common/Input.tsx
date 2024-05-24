@@ -1,11 +1,19 @@
-const Input = ({
+interface InputProps {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  value: string
+  placeholder?: string
+  className?: string
+  icon?: React.ReactNode
+}
+
+export const Input = ({
   onChange,
   value,
   placeholder,
   className = '',
   icon = null,
   ...props
-}) => (
+}: InputProps) => (
   <div className={`relative w-full ${className}`}>
     <input
       type="text"
@@ -22,5 +30,3 @@ const Input = ({
     )}
   </div>
 )
-
-export default Input

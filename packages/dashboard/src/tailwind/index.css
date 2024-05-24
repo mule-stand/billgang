@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap');
 @config "tailwind.config.ts";
 
 @tailwind base;
@@ -18,6 +19,11 @@
         --billgang-color-border-default: #f0f0f0;
         --billgang-color-border-hover: #e6e6e6;
         --billgang-color-shadow-0: #dfdfdf;
+        --billgang-color-success-background: #E5FADD;
+        --billgang-color-success-text: #338B13;
+        --billgang-color-warning-background: #FAF8E6;
+        --billgang-color-warning-text: #C1972A;
+        --billgang-color-error-background: #FAE6E6;
         --billgang-color-dialog-backdrop: rgba(37, 37, 37, 0.25);
         --billgang-color-field-background-default: var(
                 --billgang-color-surface-200
@@ -45,4 +51,10 @@
 
 body {
     font-family: 'Archivo', sans-serif;
+}
+
+html,
+body,
+#root {
+    height: 100%;
 }

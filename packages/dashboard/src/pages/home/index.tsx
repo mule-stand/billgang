@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
 import { useAtom, useCtx } from '@reatom/npm-react'
 
-import { Bag } from '../../assets/icons/bag.js'
-import { Billgang } from '../../assets/icons/billgang.js'
-import { Calendar } from '../../assets/icons/calendar.js'
-import { Crown } from '../../assets/icons/crown.js'
-import { D4RK } from '../../assets/icons/d4rk.js'
-import { Dollar } from '../../assets/icons/dollar.js'
-import { Eye } from '../../assets/icons/eye.js'
-import { Heart } from '../../assets/icons/heart.js'
-import { Medal } from '../../assets/icons/medal.js'
-import { Star } from '../../assets/icons/star.js'
-import ChartItem from '../../components/ChartItem/index.js'
+import {
+  Star,
+  Bag,
+  Billgang,
+  Calendar,
+  Crown,
+  D4RK,
+  Dollar,
+  Eye,
+  Heart,
+  Medal,
+} from '../../assets/icons.js'
+// import ChartItem from '../../components/ChartItem/index.js'
 import ReferralBlock from '../../components/ReferralBlock/index.js'
 import StatItem from '../../components/StatItem/index.js'
 import { LoadingSpinner } from '../../common/LoadingSpinner.js'
@@ -33,31 +35,31 @@ export const Home = () => {
 
   return (
     <div className="grid w-full grid-cols-1 grid-rows-[repeat(4,min-content)] gap-[16px] sm:grid-cols-2 xl:grid-cols-4 ">
-      <div className="col-span-1 row-span-2 mb-[24px] sm:col-span-2 xl:mb-0">
+      <div className="sm:col-span-2 row-span-2 mb-[24px] xl:col-span-4 xl:mb-0">
         <ReferralBlock />
       </div>
-      <ChartItem
-      // title="Referrals"
-      // value={charts.referrals}
-      // data={charts.data}
+      {/* <ChartItem
+      title="Referrals"
+      value={charts.referrals}
+      data={charts.data}
       />
       <ChartItem
-      // title="Earned" value={charts.earned} data={charts.data}
+      title="Earned" value={charts.earned} data={charts.data}
       />
       <ChartItem
-      // title="Total Revenue"
-      // value={charts.totalRevenue}
-      // data={charts.data}
+      title="Total Revenue"
+      value={charts.totalRevenue}
+      data={charts.data}
       />
       <ChartItem
-      // title="Earn Percent"
-      // value={charts.earnPercent}
-      // data={charts.data}
+      title="Earn Percent"
+      value={charts.earnPercent}
+      data={charts.data}
       />
 
       <div className="col-span-1 h-[24px] text-lg font-bold sm:col-span-2 xl:col-span-4">
         Your statistics
-      </div>
+      </div> */}
       <div className="mr-[16px] w-full flex flex-col">
         <StatItem
           Icon={Calendar}

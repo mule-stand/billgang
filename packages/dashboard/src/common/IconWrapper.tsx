@@ -26,7 +26,7 @@ type IconWrapperProps = {
   size?: keyof typeof iconSizes
 }
 
-const IconWrapper = ({
+export const IconWrapper = ({
   Icon,
   color = 'primary',
   size = 's',
@@ -37,5 +37,3 @@ const IconWrapper = ({
     </div>
   </div>
 )
-
-export default IconWrapper

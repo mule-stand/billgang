@@ -18,6 +18,12 @@ const config: Config = {
         grayish: 'var(--billgang-color-surface200)',
         textPrimary: 'var(--billgang-color-text-brandDefault)',
         textSecondary: 'var(--billgang-color-text-secondary)',
+        successBackground: 'var(--billgang-color-success-background)',
+        successText: 'var(--billgang-color-success-text)',
+        warningBackground: 'var(--billgang-color-warning-background)',
+        test: 'var(--billgang-color-success-background)', //
+        warningText: 'var(--billgang-color-warning-text)',
+        signalDangerBackground: 'var(--billgang-color-error-background)',
         borderDefault: 'var(--billgang-color-border-default)',
         borderHover: 'var(--billgang-color-border-hover)',
         dialogBackdrop: 'var(--billgang-color-dialog-backdrop)',
