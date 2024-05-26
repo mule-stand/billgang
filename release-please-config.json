@@ -1,5 +1,7 @@
 {
   "packages": {
-    "packages/ui": {}
+    "packages/ui": {
+      "release-type": "node"
+    }
   }
 }
