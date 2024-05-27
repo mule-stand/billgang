@@ -34,7 +34,7 @@ const StatItem: React.FC<StatItemProps> = ({
       </div>
     )}
     <div className="flex p-[24px_16px]">
-      <IconWrapper Icon={Icon} color="primary" size="l" />
+      <IconWrapper Icon={Icon} color="brandDefault" size="l" />
       <div className="ml-[12px]">
         <div className="text-sm text-textSecondary">{title}</div>
         <div className="text-lg font-bold">{value}</div>

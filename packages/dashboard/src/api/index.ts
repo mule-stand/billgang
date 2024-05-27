@@ -17,7 +17,7 @@ interface FetchOptions extends RequestInit {
 const apiUrl = 'https://customers-api.billgang.com'
 async function request(baseURL: string, options: FetchOptions = {}) {
   const url = new URL(`${apiUrl}/${shopId}/${baseURL}`)
-  const { params, returnHeaders, ...fetchOptions } = options // Exclude params from fetch options
+  const { params, returnHeaders, ...fetchOptions } = options
 
   if (params) {
     for (const [key, value] of Object.entries(params)) {
@@ -49,11 +49,37 @@ async function request(baseURL: string, options: FetchOptions = {}) {
 
 export const fetchDashInfo = () => request('customers/dash/info')
 export const fetchHome = () => request('customers/dash/dashboard/home')
-export const fetchOrders = async (PageNumber: string, PageSize: string) => {
-  const res = await request('customers/orders', {
-    params: { PageNumber, PageSize },
+export const fetchBalance = () => request('customers/dash/dashboard/home')
+type PageType = {
+  PageNumber: number
+  PageSize: number
+}
+
+type PageWithUrlType = PageType & {
+  url: string
+}
+
+export const fetchWithPages = async ({
+  url,
+  PageNumber,
+  PageSize,
+}: PageWithUrlType) => {
+  const res = await request(url, {
+    params: {
+      PageNumber: PageNumber.toString(),
+      PageSize: PageSize.toString(),
+    },
     returnHeaders: true,
   })
   const totalCount = res.headers.get('x-pagination-total')
   return { list: res.data, totalCount }
 }
+export const fetchOrders = ({ PageNumber, PageSize }: PageType) =>
+  fetchWithPages({ url: 'customers/orders', PageNumber, PageSize })
+
+export const fetchTransactions = ({ PageNumber, PageSize }: PageType) =>
+  fetchWithPages({
+    url: 'customers/balance/transactions',
+    PageNumber,
+    PageSize,
+  })

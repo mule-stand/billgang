@@ -1,25 +1,14 @@
-import { fetchOrders } from '../../api/index.js'
+import { fetchTransactions } from '../../api/index.js'
 import { reatomAsync, withDataAtom, onConnect, atom } from '@reatom/framework'
-export const PageSize = 10
+export const PageSize = 1
 
 export const pageNumberAtom = atom(1)
-export const enum OrderStatus {
-  NEW,
-  PENDING,
-  COMPLETED,
-  CANCELLED,
-  EXPIRED,
-  FULL_DELIVERY_FAILURE,
-  PARTIALLY_DELIVERED,
-  REFUNDED,
-  FAILED,
-}
-export const getOrders = reatomAsync((ctx) =>
-  fetchOrders({ PageNumber: ctx.get(pageNumberAtom), PageSize }),
+export const getTransactions = reatomAsync((ctx) =>
+  fetchTransactions({ PageNumber: ctx.get(pageNumberAtom), PageSize }),
 ).pipe(withDataAtom(null))
 
 pageNumberAtom.onChange((ctx) => {
-  getOrders(ctx)
+  getTransactions(ctx)
 })
 export const getPaginationText = (page: number, totalEntries: number) => {
   const entriesPerPage = PageSize
@@ -27,4 +16,4 @@ export const getPaginationText = (page: number, totalEntries: number) => {
   const endEntry = Math.min(page * entriesPerPage, totalEntries)
   return `Showing ${startEntry}-${endEntry} entries of ${totalEntries}`
 }
-onConnect(getOrders.dataAtom, getOrders)
+onConnect(getTransactions.dataAtom, getTransactions)

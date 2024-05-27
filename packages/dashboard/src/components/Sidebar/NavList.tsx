@@ -40,8 +40,7 @@ const NavList = reatomComponent(({ ctx }) => {
             <div className="mr-[8px]">
               <IconWrapper
                 Icon={Icon}
-                size="s"
-                color={isActive ? 'black' : 'steel'}
+                color={isActive ? 'textPrimary' : 'textSecondary'}
               />
             </div>
 
@@ -51,7 +50,7 @@ const NavList = reatomComponent(({ ctx }) => {
       })}
       <div className="flex cursor-pointer items-center py-[12px] pl-[8px]	text-signalDanger mt-[6px]">
         <div className="mr-[8px]">
-          <IconWrapper Icon={Logout} color="primaryDarker" size="s" />
+          <IconWrapper Icon={Logout} color="signalDanger" size="s" />
         </div>
 
         <div>Log out</div>

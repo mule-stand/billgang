@@ -64,7 +64,7 @@ export const ListItem: React.FC<ListItemType> = ({
 )
 
 export const ListTitle: React.FC<ListItemType> = ({ children }) => (
-  <ListItem className="text-[14px] text-textSecondary uppercase">
+  <ListItem className="text-sm text-textSecondary uppercase">
     {children}
   </ListItem>
 )
@@ -85,7 +85,7 @@ export const Orders = () => {
           <ListTitle>Date</ListTitle>
           <ListTitle>Review</ListTitle>
           {orders.list.map((item: OrderItem) => {
-            const { date, time } = extractDateAndTime(item.time)
+            const [date, time] = extractDateAndTime(item.time)
             return (
               <React.Fragment key={item.id}>
                 <ListItem>{item.id}</ListItem>
@@ -100,13 +100,13 @@ export const Orders = () => {
                 <ListItem>
                   <div>
                     <div>{date}</div>
-                    <div className="text-[12px] text-textSecondary">{time}</div>
+                    <div className="text-xs text-textSecondary">{time}</div>
                   </div>
                 </ListItem>
                 <ListItem>
                   {item.review ? (
                     <div className="flex-center">
-                      <IconWrapper Icon={Star} color="primary" />
+                      <IconWrapper Icon={Star} color="brandDefault" />
                       <div className="ml-[4px]">{item.review.rating}</div>
                     </div>
                   ) : (
