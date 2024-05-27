@@ -1,3 +1,5 @@
+name: Publish
+
 on:
   workflow_dispatch:
   release:
@@ -23,7 +25,10 @@ jobs:
           run_install: false
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build 📦
+        run: pnpm run build
 
       - name: Publish 🚀
         run: pnpm --recursive publish --no-git-checks --access public
