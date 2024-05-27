@@ -79,7 +79,7 @@ export const Pagination = ({
     return (
       <Button
         variant={
-          isCurrentPage ? ButtonVariant.Primary : ButtonVariant.Secondary
+          isCurrentPage ? ButtonVariant.PrimaryRounded : ButtonVariant.Secondary
         }
         key={index}
         onClick={() => onPageChange(page)}

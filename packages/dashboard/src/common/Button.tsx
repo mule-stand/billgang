@@ -3,6 +3,7 @@ import { ccn } from '../utils/index.js'
 export const enum ButtonVariant {
   Primary,
   Secondary,
+  PrimaryRounded,
 }
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,6 +15,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants: Record<ButtonVariant, string> = {
   [ButtonVariant.Primary]: ccn(
+    'bg-brandDefault',
+    'text-surface100',
+    'border-brandDefault',
+    'border',
+  ),
+  [ButtonVariant.PrimaryRounded]: ccn(
     'rounded-[8px]',
     'bg-surface0',
     'text-brandDefault',
@@ -37,11 +44,11 @@ export const Button: React.FC<ButtonProps> = ({
   <button
     className={ccn(
       'rounded-[12px]',
-      'px-[8px 16px]',
+      'p-[8px_16px]',
       'text-sm',
       'disabled:opacity-50',
       variants[variant],
-      isSquare ? 'w-[32px] h-[32px] p-0 flex-center' : 'w-fit h-[36px]',
+      isSquare ? 'w-[32px] h-[32px] p-[0px_0px] flex-center' : 'w-fit h-[36px]',
       className,
     )}
     {...props}

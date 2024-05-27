@@ -40,20 +40,18 @@ export const formatTimestamp = (timestamp: number) => {
   })
 }
 export const extractDateAndTime = (isoTime: string) => {
-  let date = new Date(isoTime)
-  let dateOptions: Intl.DateTimeFormatOptions = {
+  const date = new Date(isoTime)
+  const dateOptions: Intl.DateTimeFormatOptions = {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
   }
-  let timeOptions: Intl.DateTimeFormatOptions = {
+  const timeOptions: Intl.DateTimeFormatOptions = {
     hour: '2-digit',
     minute: '2-digit',
   }
-  let formattedDate = new Intl.DateTimeFormat('en-US', dateOptions).format(date)
-  let formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date)
-  return {
-    date: formattedDate,
-    time: formattedTime,
-  }
+  const dateString = date.toLocaleString('en-US', dateOptions)
+  const timeString = date.toLocaleString('en-US', timeOptions)
+
+  return [dateString, timeString]
 }
