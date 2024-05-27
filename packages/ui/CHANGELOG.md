@@ -1,5 +1,12 @@
 # @billgang/ui
 
+## [2.1.0](https://github.com/mule-stand/billgang/compare/ui-v2.0.0...ui-v2.1.0) (2024-05-27)
+
+
+### Features
+
+* **ui:** release-please test 14 ([674511d](https://github.com/mule-stand/billgang/commit/674511dd4556305061d53bcadfcf5b771e918167))
+
 ## [2.0.0](https://github.com/mule-stand/billgang/compare/ui-v1.0.0...ui-v2.0.0) (2024-05-27)
 
 
