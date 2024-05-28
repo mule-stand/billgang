@@ -1,8 +1,8 @@
 import { escape } from 'querystring'
 
 const customerToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY3NjQ1MSIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTExMTYxOX0.L-3B2deA2RVzBPrGWxMEGkTgq6wX-yafMhpSSp7EvQM'
-const shopId = '15124f8d-2c8c-4dda-a04c-31c16816f9b6'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY4Njg2MiIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTk2NTQ2OX0.7-2-sy0fje93JzyXNY5JK6a1CbOPQPVDlJ93Ul3kH34'
+const shopId = '38332d9f-3bb6-4b3f-ac68-90151b968958'
 const defaultOptions = {
   headers: {
     Authorization: `Bearer ${customerToken}`,

@@ -7,8 +7,14 @@ node-cli:
 node-cli-build:
 	docker compose run --build --rm node-cli sh
 
+check:
+	docker compose run --rm node-cli pnpm --workspace-root run check
+
 format:
 	docker compose run --rm node-cli pnpm --workspace-root run format
+
+lint:
+	docker compose run --rm node-cli pnpm --workspace-root run lint
 
 dev:
 	docker compose up dev
