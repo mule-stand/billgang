@@ -2,9 +2,7 @@
   "name": "@billgang/ui",
   "version": "3.3.0",
   "type": "module",
-  "files": [
-    "dist/"
-  ],
+  "files": ["dist/"],
   "exports": {
     "./button": {
       "import": "./dist/button.js",

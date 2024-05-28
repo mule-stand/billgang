@@ -1,18 +1,25 @@
 import { useAtom } from '@reatom/npm-react'
 import React from 'react'
-import {
-  getOrders,
-  pageNumberAtom,
-  getPaginationText,
-  PageSize,
-} from './model.js'
+import { IconWrapper } from '../../common/IconWrapper.js'
 import { LoadingSpinner } from '../../common/LoadingSpinner.js'
 import { Pagination } from '../../common/Pagination.js'
-import { IconWrapper } from '../../common/IconWrapper.js'
-import { StatusVariant, StatusIndicator } from '../../common/StatusIndicator.js'
+import {
+  StatusIndicator,
+  type StatusVariant,
+} from '../../common/StatusIndicator.js'
+import {
+  PageSize,
+  getOrders,
+  getPaginationText,
+  pageNumberAtom,
+} from './model.js'
 
-import { formatPrice, Price, extractDateAndTime } from '../../utils/index.js'
 import { Star } from '../../assets/icons.js'
+import {
+  type Price,
+  extractDateAndTime,
+  formatPrice,
+} from '../../utils/index.js'
 interface ListItemType {
   children: React.ReactNode
   className?: string

@@ -1,5 +1,5 @@
+import { onConnect, reatomAsync, withDataAtom } from '@reatom/framework'
 import { fetchRewards } from '../../api/index.js'
-import { reatomAsync, withDataAtom, onConnect } from '@reatom/framework'
 
 export const getRewards = reatomAsync(fetchRewards).pipe(withDataAtom(null))
 

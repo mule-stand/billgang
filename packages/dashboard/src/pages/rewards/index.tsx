@@ -1,7 +1,11 @@
 import { useAtom } from '@reatom/npm-react'
-import { getRewards } from './model.js'
 import { LoadingSpinner } from '../../common/LoadingSpinner.js'
-import { formatPrice, Price } from '../../utils/index.js'
+import { IconWrapper } from '../../common/IconWrapper.js'
+import { type Price, formatPrice } from '../../utils/index.js'
+import { Bag, Confetti } from '../../assets/icons.js'
+import { getRewards } from './model.js'
+import { Button } from '../../common/Button.js'
+
 export const Rewards = () => {
   const [rewards] = useAtom(getRewards.dataAtom)
   const [pending] = useAtom((ctx) => ctx.spy(getRewards.pendingAtom) > 0)
@@ -13,7 +17,7 @@ export const Rewards = () => {
     if (rewards === null) return
 
     if (rewards?.length) {
-      return rewards.map((item) => (
+      return rewards.map((item: CustomerReward) => (
         <Achievement key={item.id} achievement={item} />
       ))
     }
@@ -22,44 +26,111 @@ export const Rewards = () => {
   }
   return (
     <>
-      <div className="m-[8px_0_16px_8px] font-bold text-lg">Rewards</div>
-      <div className="text-textSecondary">
-        To unlock an exclusive reward, complete everything on this checklist
+      <div className="m-[8px_0_16px_8px]">
+        <div className="font-bold text-lg">Rewards</div>
+        <div className="text-textSecondary">
+          To unlock an exclusive reward, complete everything on this checklist
+        </div>
       </div>
-      <div className="justify-between grid gap-4">{renderContent()}</div>
+
+      <div className="justify-between grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+        {renderContent()}
+      </div>
     </>
   )
 }
 
 const Achievement = ({ achievement }: AchievementProps) => {
   const [title, description] = formatAchievementTitleDescription(achievement)
-  const percentageProgress = calculateProgressPercentage(achievement)
+  const [percentageProgress, progress, goal] =
+    calculateProgressPercentageAndComplete(achievement)
+
+  const isComplete = progress === goal
+  return (
+    <div className="flex flex-col border border-borderDefault rounded-2xl p-6 items-center">
+      <CircularProgress percentage={percentageProgress} />
+      <div
+        className={`mt-3 rounded-xl px-2 py-1 items-start flex ${
+          isComplete
+            ? 'text-brandDefault bg-brandLight'
+            : 'text-textSecondary bg-surface0'
+        }`}
+      >
+        {isComplete ? (
+          <div className="flex items-center">
+            <Confetti /> <span className="ml-1">Completed!</span>
+          </div>
+        ) : (
+          `Done: ${progress} / ${goal}`
+        )}
+      </div>
+
+      <span className="items-center font-semibold flex mb-1 mt-4">
+        <IconWrapper className="icon-wrapper w-6 h-6 rounded-lg" Icon={Bag} />
+        <div className="ml-2">{title}</div>
+      </span>
+      <span className="bg-surface100 text-center mb-4 text-sm">
+        {description}
+      </span>
+      <Button
+        variant={isComplete ? 'primary' : 'secondary'}
+        className="w-full mt-auto"
+      >
+        {isComplete ? 'Claim' : getButtonText(achievement)}
+      </Button>
+    </div>
+  )
+}
+interface CircularProgressProps {
+  percentage: number
+  radius?: number
+  strokeWidth?: number
+}
+
+const CircularProgress: React.FC<CircularProgressProps> = ({
+  percentage,
+  radius = 40,
+  strokeWidth = 8,
+}) => {
+  const normalisedRadius = radius + strokeWidth / 2
+  const diameter = normalisedRadius * 2
+  const circumference = 2 * Math.PI * radius
+  const offset = circumference - (percentage / 100) * circumference
 
   return (
-    <div className="flex flex-col border border-borderDefault rounded-2xl p-6">
-      <div className="grid grid-col-[auto_1fr] gap-4 item-center">
-        <div className="flex flex-col gap-1">
-          <span className="font-semibold text-xl bg-surface100">{title}</span>
-          <span className="bg-surface100">{description}</span>
-        </div>
-      </div>
-      <div className="grid item-center grid-col-[1fr_auto] gap-4">
-        <div
-          style={{
-            height: 5,
-            width: '100%',
-            ['--percentageProgress' as string]: `${percentageProgress}% `,
-            // background: `linear-gradient(90deg, red ${percentageProgress}%, grey ${percentageProgress}%)`,
-          }}
-          className="rounded-full bg-gradient-to-r from-brand from-[length:var(--percentageProgress)] to-gray-900/5 to-[length:var(--percentageProgress)]"
-        ></div>
-        <div className="text-brand">{percentageProgress}% complete</div>
-      </div>
+    <div
+      style={{ width: diameter, height: diameter }}
+      className="flex items-center justify-center overflow-hidden"
+    >
+      <svg aria-hidden="true" width={diameter} height={diameter}>
+        <circle
+          cx={normalisedRadius}
+          cy={normalisedRadius}
+          r={radius}
+          fill="transparent"
+          className="stroke-borderDefault"
+          strokeWidth={strokeWidth}
+        />
+        <circle
+          cx={normalisedRadius}
+          cy={normalisedRadius}
+          r={radius}
+          fill="transparent"
+          strokeWidth={strokeWidth}
+          strokeDasharray={`${circumference} ${circumference}`}
+          strokeDashoffset={offset}
+          className="stroke-brandDefault"
+          transform={`rotate(-90 ${normalisedRadius} ${normalisedRadius})`}
+        />
+      </svg>
+      <span className="absolute text-lg font-bold text-brandDefault">
+        {percentage}%
+      </span>
     </div>
   )
 }
 
-export const enum RewardType {
+export enum RewardType {
   Balance = 'BALANCE',
   Product = 'PRODUCT',
 }
@@ -76,7 +147,7 @@ type ProductRewardsOptions = {
   }[]
 }
 
-export const enum AchievementType {
+export enum AchievementType {
   Spend = 'SPEND_AMOUNT',
   Order = 'ORDER_COUNT',
   Referral = 'REFER_FRIEND',
@@ -170,20 +241,31 @@ type CustomerReward = {
 const formatAchievementReward = (achievement: CustomerReward): string => {
   switch (achievement.rewardRule.rewardType) {
     case RewardType.Balance:
-      return `${formatPrice(achievement.rewardRule.rewardOptions.balance)} on the balance`
+      return `${formatPrice(
+        achievement.rewardRule.rewardOptions.balance,
+      )} on the balance`
     case RewardType.Product:
-      return (
-        'products: ' +
-        achievement.rewardRule.rewardOptions.productsWithVariants
-          .map(
-            (product) =>
-              `${product.quantity} ${product.productName} (${product.variantName})`,
-          )
-          .join()
-      )
+      return `products: ${achievement.rewardRule.rewardOptions.productsWithVariants
+        .map(
+          (product) =>
+            `${product.quantity} ${product.productName} (${product.variantName})`,
+        )
+        .join()}`
   }
 }
-
+const getButtonText = (achievement: CustomerReward): string => {
+  switch (achievement.rewardRule.rewardType) {
+    case RewardType.Balance:
+      return formatPrice(achievement.rewardRule.rewardOptions.balance)
+    case RewardType.Product:
+      return `${achievement.rewardRule.rewardOptions.productsWithVariants
+        .map(
+          (product) =>
+            `${product.quantity} ${product.productName} (${product.variantName})`,
+        )
+        .join()}`
+  }
+}
 const formatAchievementDescription = (achievement: CustomerReward): string => {
   switch (achievement.rewardRule.ruleType) {
     case AchievementType.Spend:
@@ -245,9 +327,10 @@ const formatAchievementTitleDescription = (
   ]
 }
 
-const calculateProgressPercentage = (achievement: CustomerReward): number => {
+const calculateProgressPercentageAndComplete = (
+  achievement: CustomerReward,
+): [number, number, number] => {
   let goal: number
-
   switch (achievement.rewardRule.ruleType) {
     case AchievementType.Spend:
       goal = achievement.rewardRule.ruleOptions.forEach
@@ -262,9 +345,10 @@ const calculateProgressPercentage = (achievement: CustomerReward): number => {
       goal = achievement.rewardRule.ruleOptions.minReviews
       break
   }
-
-  const percentage = (achievement.progress / goal) * 100
-  return Math.round((percentage + Number.EPSILON) * 100) / 100
+  const percentage =
+    Math.round(((achievement.progress / goal) * 100 + Number.EPSILON) * 100) /
+    100
+  return [percentage, achievement.progress, goal]
 }
 
 type AchievementProps = {

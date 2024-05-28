@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
-import { useAtom, useCtx } from '@reatom/npm-react'
+import { useAtom } from '@reatom/npm-react'
 
 import {
-  Star,
   Bag,
   Billgang,
   Calendar,
@@ -12,18 +10,19 @@ import {
   Eye,
   Heart,
   Medal,
+  Star,
 } from '../../assets/icons.js'
+import { LoadingSpinner } from '../../common/LoadingSpinner.js'
 // import ChartItem from '../../components/ChartItem/index.js'
 import ReferralBlock from '../../components/ReferralBlock/index.js'
 import StatItem from '../../components/StatItem/index.js'
-import { LoadingSpinner } from '../../common/LoadingSpinner.js'
 
-import { getHome } from './model.js'
 import {
   convertCfImageIdToUrl,
   formatPrice,
   formatTimestamp,
 } from '../../utils/index.js'
+import { getHome } from './model.js'
 
 const POWERED_BY = 'Billgang'
 const STORE = 'D4RK'
@@ -84,7 +83,9 @@ export const Home = () => {
           imageName={data.topSpenderProduct.name}
           Icon={Crown}
           title="Top spent"
-          value={`${formatPrice({ amount: data.topSpenderProduct.amountSpentUsd })} spent`}
+          value={`${formatPrice({
+            amount: data.topSpenderProduct.amountSpentUsd,
+          })} spent`}
         />
       )}
       <div className="mr-[16px] w-full flex flex-col">

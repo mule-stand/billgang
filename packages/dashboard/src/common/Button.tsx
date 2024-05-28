@@ -1,54 +1,46 @@
-import React from 'react'
+import type React from 'react'
 import { ccn } from '../utils/index.js'
-export const enum ButtonVariant {
-  Primary,
-  Secondary,
-  PrimaryRounded,
-}
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
-  variant?: ButtonVariant
+  variant?: keyof typeof variants
   className?: string
   isSquare?: boolean
 }
 
-const variants: Record<ButtonVariant, string> = {
-  [ButtonVariant.Primary]: ccn(
+const variants = {
+  primary: ccn(
     'bg-brandDefault',
     'text-surface100',
     'border-brandDefault',
     'border',
   ),
-  [ButtonVariant.PrimaryRounded]: ccn(
-    'rounded-[8px]',
+  primaryRounded: ccn(
     'bg-surface0',
     'text-brandDefault',
     'border-brandDefault',
     'border',
   ),
-  [ButtonVariant.Secondary]: ccn(
-    'rounded-[8px]',
-    'bg-surface0',
-    'text-textPrimary',
-  ),
+  secondary: ccn('bg-surface0', 'text-textPrimary'),
 }
 
 export const Button: React.FC<ButtonProps> = ({
   children,
-  variant = ButtonVariant.Primary,
+  variant = 'primary',
   className,
   isSquare = false,
   ...props
 }) => (
   <button
     className={ccn(
-      'rounded-[12px]',
+      'rounded-xl',
       'p-[8px_16px]',
       'text-sm',
       'disabled:opacity-50',
       variants[variant],
-      isSquare ? 'w-[32px] h-[32px] !p-0 flex-center' : 'w-fit h-[36px]',
+      isSquare
+        ? 'w-[32px] h-[32px] !p-0 flex-center rounded-sm'
+        : 'w-fit h-[36px]',
       className,
     )}
     {...props}

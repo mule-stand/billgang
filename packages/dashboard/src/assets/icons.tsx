@@ -2,6 +2,7 @@ export const D4RK = () => (
   <svg
     width="28"
     height="28"
+    aria-hidden="true"
     viewBox="0 0 28 28"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +35,7 @@ export const Wallet = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 17 14"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +50,7 @@ export const Crown = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 28 21"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -62,6 +65,7 @@ export const Star = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 26 25"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +80,7 @@ export const Caretdown = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 20 20"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -90,6 +95,7 @@ export const Medal = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 20 28"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +110,7 @@ export const Billgang = () => (
   <svg
     width="28"
     height="28"
+    aria-hidden="true"
     viewBox="0 0 28 28"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -123,6 +130,7 @@ export const Question = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 18 18"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -137,6 +145,7 @@ export const Heart = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 -2 18 16"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -149,6 +158,7 @@ export const Dollar = () => (
     width="100%"
     height="100%"
     fill="inherit"
+    aria-hidden="true"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -162,6 +172,7 @@ export const Bag = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 26 23"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -172,10 +183,28 @@ export const Bag = () => (
     />
   </svg>
 )
+
+export const Confetti = () => (
+  <svg
+    aria-hidden="true"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M6.33925 3.70055C6.20714 3.56878 6.04397 3.47241 5.86479 3.42034C5.68562 3.36826 5.49621 3.36215 5.31405 3.40258C5.13189 3.443 4.96285 3.52866 4.82252 3.65164C4.68219 3.77462 4.5751 3.93097 4.51113 4.10625L0.820426 14.258C0.759797 14.4254 0.740213 14.6049 0.763318 14.7814C0.786423 14.958 0.851543 15.1264 0.953212 15.2726C1.05488 15.4187 1.19013 15.5384 1.34761 15.6214C1.50509 15.7045 1.6802 15.7486 1.85824 15.75C1.98933 15.7491 2.11925 15.7253 2.24215 15.6797L12.3932 11.9883C12.5685 11.9244 12.7249 11.8174 12.848 11.6771C12.971 11.5368 13.0568 11.3677 13.0973 11.1856C13.1378 11.0034 13.1317 10.814 13.0797 10.6348C13.0277 10.4555 12.9313 10.2923 12.7996 10.1602L6.33925 3.70055ZM5.75355 13.2075L3.29261 10.7466L4.21793 8.20055L8.29957 12.2822L5.75355 13.2075ZM1.88636 14.6137L2.87074 11.913L4.58988 13.6322L1.88636 14.6137ZM9.46886 11.8575L4.64261 7.03125L5.55668 4.50914L11.9853 10.9378L9.46886 11.8575ZM9.75011 5.0625C9.76068 4.68223 9.85275 4.30866 10.0201 3.96703C10.3928 3.22242 11.0959 2.8125 12.0001 2.8125C12.4712 2.8125 12.7736 2.65148 12.9599 2.30555C13.058 2.11201 13.1143 1.9 13.1251 1.68328C13.1257 1.5341 13.1855 1.39125 13.2914 1.28615C13.3972 1.18106 13.5405 1.12233 13.6897 1.12289C13.8389 1.12345 13.9818 1.18325 14.0869 1.28913C14.1919 1.39502 14.2507 1.53832 14.2501 1.6875C14.2501 2.59172 13.6511 3.9375 12.0001 3.9375C11.529 3.9375 11.2267 4.09852 11.0403 4.44445C10.9422 4.63799 10.8859 4.85 10.8751 5.06672C10.8748 5.14059 10.86 5.21368 10.8315 5.28182C10.803 5.34996 10.7613 5.41181 10.7089 5.46385C10.6564 5.51589 10.5943 5.55709 10.5259 5.5851C10.4576 5.61311 10.3844 5.62739 10.3105 5.62711C10.2366 5.62683 10.1635 5.61201 10.0954 5.58348C10.0273 5.55496 9.96541 5.51329 9.91337 5.46087C9.86134 5.40844 9.82014 5.34627 9.79212 5.27792C9.76411 5.20957 9.74984 5.13637 9.75011 5.0625ZM8.06261 2.8125V1.125C8.06261 0.975816 8.12188 0.832742 8.22737 0.727252C8.33286 0.621763 8.47593 0.5625 8.62511 0.5625C8.7743 0.5625 8.91737 0.621763 9.02286 0.727252C9.12835 0.832742 9.18761 0.975816 9.18761 1.125V2.8125C9.18761 2.96168 9.12835 3.10476 9.02286 3.21025C8.91737 3.31574 8.7743 3.375 8.62511 3.375C8.47593 3.375 8.33286 3.31574 8.22737 3.21025C8.12188 3.10476 8.06261 2.96168 8.06261 2.8125ZM15.2106 8.60203C15.2628 8.65429 15.3042 8.71633 15.3325 8.78459C15.3607 8.85286 15.3752 8.92602 15.3752 8.9999C15.3751 9.07377 15.3606 9.14692 15.3323 9.21516C15.304 9.2834 15.2625 9.3454 15.2102 9.39762C15.158 9.44983 15.0959 9.49124 15.0277 9.51948C14.9594 9.54773 14.8862 9.56225 14.8124 9.56221C14.7385 9.56218 14.6653 9.5476 14.5971 9.51929C14.5289 9.49099 14.4669 9.44953 14.4146 9.39727L13.2896 8.27227C13.1841 8.16672 13.1248 8.02356 13.1248 7.8743C13.1248 7.72503 13.1841 7.58188 13.2896 7.47633C13.3952 7.37078 13.5383 7.31148 13.6876 7.31148C13.8369 7.31148 13.98 7.37078 14.0856 7.47633L15.2106 8.60203ZM15.553 5.59617L13.8655 6.15867C13.724 6.20585 13.5695 6.19487 13.436 6.12815C13.3026 6.06143 13.2011 5.94443 13.1539 5.80289C13.1068 5.66135 13.1177 5.50687 13.1845 5.37343C13.2512 5.23998 13.3682 5.13851 13.5097 5.09133L15.1972 4.52883C15.3388 4.48165 15.4932 4.49263 15.6267 4.55935C15.7601 4.62607 15.8616 4.74307 15.9088 4.88461C15.956 5.02615 15.945 5.18063 15.8783 5.31407C15.8115 5.44752 15.6945 5.54899 15.553 5.59617Z"
+      fill="#FF3F19"
+    />
+  </svg>
+)
+
 export const Logout = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 16 16"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -190,6 +219,7 @@ export const Calendar = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 22 24"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -204,6 +234,7 @@ export const Logo = () => (
   <svg
     width="120"
     height="24"
+    aria-hidden="true"
     viewBox="0 0 120 24"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -230,6 +261,7 @@ export const Home = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 16 17"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -244,6 +276,7 @@ export const Eye = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 28 28"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -259,6 +292,7 @@ export const Search = () => (
     width="100%"
     height="100%"
     fill="inherit"
+    aria-hidden="true"
     viewBox="0 0 18 18"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -272,6 +306,7 @@ export const Info = () => (
   <svg
     width="18"
     height="18"
+    aria-hidden="true"
     viewBox="0 0 18 18"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -287,6 +322,7 @@ export const Fire = () => (
   <svg
     width="14"
     height="18"
+    aria-hidden="true"
     viewBox="0 0 14 18"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -301,6 +337,7 @@ export const Plus = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 16 16"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -315,6 +352,7 @@ export const Minus = () => (
   <svg
     width="100%"
     height="100%"
+    aria-hidden="true"
     viewBox="0 0 16 2"
     fill="inherit"
     xmlns="http://www.w3.org/2000/svg"
@@ -330,6 +368,7 @@ export const ThreeDots = () => (
   <svg
     width="2"
     height="14"
+    aria-hidden="true"
     viewBox="0 0 2 14"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

@@ -37,7 +37,7 @@ const ReferralList = () => (
         caption={caption}
         description={description}
         index={i + 1}
-        key={i}
+        key={caption}
         bar={i + 1 !== a.length}
       />
     ))}

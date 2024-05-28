@@ -1,8 +1,8 @@
-import React from 'react'
+import type React from 'react'
 import { ccn } from '../utils/index.js'
 const iconSizes = {
   sm: 'w-[16px] h-[16px]',
-  s: 'w-[17px] h-[17px]',
+  s: 'w-[16px] h-[16px]',
   m: 'w-[21px] h-[21px]',
   l: 'w-[28px] h-[28px]',
 }
@@ -26,15 +26,17 @@ type IconWrapperProps = {
   Icon?: React.FunctionComponent
   color?: keyof typeof colorVariants
   size?: keyof typeof iconSizes
+  className?: string
 }
 
 export const IconWrapper = ({
   Icon,
   color = 'brandDefault',
   size = 's',
+  className,
 }: IconWrapperProps) => (
-  <div className={ccn(containerSizeClassNamesMap[size])}>
-    <div className={`${colorVariants[color]} ${iconSizes[size]} flex-center`}>
+  <div className={ccn(containerSizeClassNamesMap[size], className)}>
+    <div className={ccn(colorVariants[color], iconSizes[size], 'flex-center')}>
       {Icon && <Icon />}
     </div>
   </div>

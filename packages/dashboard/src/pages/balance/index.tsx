@@ -1,23 +1,23 @@
 import { useAtom } from '@reatom/npm-react'
 import {
+  PageSize,
+  getPaginationText,
   getTransactions,
   pageNumberAtom,
-  getPaginationText,
-  PageSize,
 } from './model.js'
 
+import { Button } from '../../common/Button.js'
 import { IconWrapper } from '../../common/IconWrapper.js'
-import { Button, ButtonVariant } from '../../common/Button.js'
-import { Pagination } from '../../common/Pagination.js'
 import { LoadingSpinner } from '../../common/LoadingSpinner.js'
+import { Pagination } from '../../common/Pagination.js'
 
-import { formatPrice, Price } from '../../utils/index.js'
+import { type Price, formatPrice } from '../../utils/index.js'
 
-import { Plus, Minus, Fire, Question, ThreeDots } from '../../assets/icons.js'
+import { Fire, Minus, Plus, Question, ThreeDots } from '../../assets/icons.js'
 
 enum TransactionStatus {
-  ADDED = 'ADDED',
-  REMOVED = 'REMOVED',
+  Added = 'ADDED',
+  Removed = 'REMOVED',
 }
 
 interface Transaction {
@@ -29,23 +29,23 @@ interface Transaction {
 }
 
 const iconStatusMap = {
-  [TransactionStatus.ADDED]: Plus,
-  [TransactionStatus.REMOVED]: Minus,
+  [TransactionStatus.Added]: Plus,
+  [TransactionStatus.Removed]: Minus,
 }
 
 const symbolStatusMap = {
-  [TransactionStatus.ADDED]: '+',
-  [TransactionStatus.REMOVED]: '-',
+  [TransactionStatus.Added]: '+',
+  [TransactionStatus.Removed]: '-',
 }
 
 const classNamesStatusMap = {
-  [TransactionStatus.ADDED]: 'text-successText',
-  [TransactionStatus.REMOVED]: 'text-textPrimary',
+  [TransactionStatus.Added]: 'text-successText',
+  [TransactionStatus.Removed]: 'text-textPrimary',
 }
 
 const textStatusMap = {
-  [TransactionStatus.ADDED]: 'Added to your balance',
-  [TransactionStatus.REMOVED]: 'Payment',
+  [TransactionStatus.Added]: 'Added to your balance',
+  [TransactionStatus.Removed]: 'Payment',
 }
 
 const groupTransactionsByDate = (
@@ -54,7 +54,7 @@ const groupTransactionsByDate = (
   const result: Record<string, Transaction[]> = {}
   const today = new Date()
 
-  transactions.forEach((transaction) => {
+  for (const transaction of transactions) {
     const transactionDate = new Date(transaction.createdAt)
     const key =
       transactionDate.toDateString() === today.toDateString()
@@ -69,15 +69,15 @@ const groupTransactionsByDate = (
       result[key] = []
     }
 
-    result[key]!.push(transaction)
-  })
+    result[key]?.push(transaction)
+  }
 
   return result
 }
 
 const renderTransaction = ({ id, price, status }: Transaction) => {
   const finalPrice = formatPrice(price).slice(
-    status === TransactionStatus.REMOVED ? 1 : 0,
+    status === TransactionStatus.Removed ? 1 : 0,
   )
   return (
     <div className="p-[12px_16px] flex items-center" key={id}>
@@ -113,8 +113,8 @@ export const Balance = () => {
       const groupedTransactions = groupTransactionsByDate(transactions.list)
       return (
         <>
-          {Object.entries(groupedTransactions).map(([date, group], index) => (
-            <div key={index}>
+          {Object.entries(groupedTransactions).map(([date, group]) => (
+            <div key={date}>
               <div className="p-[12px_16px_10px] text-textSecondary text-sm w-full border-b-[1px] border-borderDefault">
                 {date}
               </div>
@@ -153,14 +153,11 @@ export const Balance = () => {
             <IconWrapper color="surface100" Icon={Plus} />
             <span className="ml-[4px]">Add balance</span>
           </Button>
-          <Button
-            variant={ButtonVariant.Secondary}
-            className="mr-[16px] flex-center"
-          >
+          <Button variant="secondary" className="mr-[16px] flex-center">
             <IconWrapper Icon={Question} />
             <span className="ml-[4px]">Contact support</span>
           </Button>
-          <Button variant={ButtonVariant.Secondary} isSquare>
+          <Button variant="secondary" isSquare>
             <IconWrapper Icon={ThreeDots} />
           </Button>
         </div>

@@ -1,5 +1,5 @@
+import { atom, onConnect, reatomAsync, withDataAtom } from '@reatom/framework'
 import { fetchTransactions } from '../../api/index.js'
-import { reatomAsync, withDataAtom, onConnect, atom } from '@reatom/framework'
 export const PageSize = 10
 
 export const pageNumberAtom = atom(1)

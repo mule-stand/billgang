@@ -1,7 +1,7 @@
 import { createCtx } from '@reatom/framework'
 
-import App from './app/index.js'
 import { reatomContext } from '@reatom/npm-react'
+import App from './app/index.js'
 
 const ctx = createCtx()
 

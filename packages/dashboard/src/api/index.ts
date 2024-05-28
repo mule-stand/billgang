@@ -1,7 +1,7 @@
 // rewards user
 const customerToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY4Njg2MiIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTk2NTQ2OX0.7-2-sy0fje93JzyXNY5JK6a1CbOPQPVDlJ93Ul3kH34";
-const shopId = "38332d9f-3bb6-4b3f-ac68-90151b968958";
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY4Njg2MiIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTk2NTQ2OX0.7-2-sy0fje93JzyXNY5JK6a1CbOPQPVDlJ93Ul3kH34'
+const shopId = '38332d9f-3bb6-4b3f-ac68-90151b968958'
 
 // default user
 // const customerToken =
@@ -11,31 +11,31 @@ const shopId = "38332d9f-3bb6-4b3f-ac68-90151b968958";
 const defaultOptions = {
   headers: {
     Authorization: `Bearer ${customerToken}`,
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-};
+}
 interface FetchOptions extends RequestInit {
-  params?: { [key: string]: string };
-  returnHeaders?: boolean;
+  params?: { [key: string]: string }
+  returnHeaders?: boolean
 }
 type PageType = {
-  PageNumber: number;
-  PageSize: number;
-};
+  PageNumber: number
+  PageSize: number
+}
 
 type PageWithUrlType = PageType & {
-  url: string;
-};
+  url: string
+}
 
-const apiUrl = "https://customers-api.billgang.com";
+const apiUrl = 'https://customers-api.billgang.com'
 async function request(baseURL: string, options: FetchOptions = {}) {
-  const url = new URL(`${apiUrl}/${shopId}/${baseURL}`);
-  const { params, returnHeaders, ...fetchOptions } = options;
+  const url = new URL(`${apiUrl}/${shopId}/${baseURL}`)
+  const { params, returnHeaders, ...fetchOptions } = options
 
   if (params) {
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined) {
-        url.searchParams.append(key, value);
+        url.searchParams.append(key, value)
       }
     }
   }
@@ -44,26 +44,25 @@ async function request(baseURL: string, options: FetchOptions = {}) {
     const response = await fetch(url.toString(), {
       ...defaultOptions,
       ...fetchOptions,
-    });
+    })
     if (!response.ok) {
-      throw response;
+      throw response
     }
-    const data = await response.json();
+    const data = await response.json()
     if (returnHeaders) {
-      return { headers: response.headers, data };
-    } else {
-      return data;
+      return { headers: response.headers, data }
     }
+    return data
   } catch (error) {
-    console.error("Fetch error:", error);
-    throw error;
+    console.error('Fetch error:', error)
+    throw error
   }
 }
 
-export const fetchDashInfo = () => request("customers/dash/info");
-export const fetchHome = () => request("customers/dash/dashboard/home");
-export const fetchBalance = () => request("customers/dash/dashboard/home");
-export const fetchRewards = () => request("customers/rewards");
+export const fetchDashInfo = () => request('customers/dash/info')
+export const fetchHome = () => request('customers/dash/dashboard/home')
+export const fetchBalance = () => request('customers/dash/dashboard/home')
+export const fetchRewards = () => request('customers/rewards')
 
 export const fetchWithPages = async ({
   url,
@@ -76,16 +75,16 @@ export const fetchWithPages = async ({
       PageSize: PageSize.toString(),
     },
     returnHeaders: true,
-  });
-  const totalCount = res.headers.get("x-pagination-total");
-  return { list: res.data, totalCount };
-};
+  })
+  const totalCount = res.headers.get('x-pagination-total')
+  return { list: res.data, totalCount }
+}
 export const fetchOrders = ({ PageNumber, PageSize }: PageType) =>
-  fetchWithPages({ url: "customers/orders", PageNumber, PageSize });
+  fetchWithPages({ url: 'customers/orders', PageNumber, PageSize })
 
 export const fetchTransactions = ({ PageNumber, PageSize }: PageType) =>
   fetchWithPages({
-    url: "customers/balance/transactions",
+    url: 'customers/balance/transactions',
     PageNumber,
     PageSize,
-  });
+  })

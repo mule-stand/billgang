@@ -1,2 +1,2 @@
 export const a = 'sdfdfdfdfdf'
-const b = "fdf"
+const b = 'fdf'

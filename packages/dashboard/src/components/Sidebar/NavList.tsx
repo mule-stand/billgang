@@ -1,4 +1,6 @@
 import { reatomComponent, useAtom } from '@reatom/npm-react'
+import { routeAtom } from '../../app/index.js'
+import { Routes } from '../../app/routes.js'
 import {
   Dollar,
   Heart,
@@ -9,8 +11,6 @@ import {
   Wallet,
 } from '../../assets/icons.js'
 import { IconWrapper } from '../../common/IconWrapper.js'
-import { routeAtom } from '../../app/index.js'
-import { Routes } from '../../app/routes.js'
 
 const sidebarItems: [Routes, React.FunctionComponent][] = [
   [Routes.Home, Home],
@@ -25,7 +25,7 @@ const NavList = reatomComponent(({ ctx }) => {
   const [route] = useAtom(routeAtom)
   return (
     <div>
-      {sidebarItems.map(([text, Icon], i) => {
+      {sidebarItems.map(([text, Icon]) => {
         const isActive = text === route
         return (
           <div
@@ -35,7 +35,7 @@ const NavList = reatomComponent(({ ctx }) => {
                 ? 'rounded-[12px] bg-surface0 text-textPrimary'
                 : 'text-textSecondary'
             }`}
-            key={i}
+            key={text}
           >
             <div className="mr-[8px]">
               <IconWrapper

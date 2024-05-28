@@ -1,7 +1,7 @@
+import { useAtom } from '@reatom/npm-react'
 import Card from './Card.js'
 import NavList from './NavList.js'
 import { getDashInfo } from './model.js'
-import { useAtom } from '@reatom/npm-react'
 
 export const Sidebar = () => {
   const [data] = useAtom(getDashInfo.dataAtom)

@@ -1,9 +1,7 @@
 {
   "name": "@billgang/dashboard",
   "type": "module",
-  "files": [
-    "dist/"
-  ],
+  "files": ["dist/"],
   "exports": {
     ".": {
       "import": "./dist/index.js",
