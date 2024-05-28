@@ -22,7 +22,6 @@
     "build-watch": "tsup --watch"
   },
   "devDependencies": {
-    "@billgang/eslint-config": "workspace:*",
     "@billgang/typescript-config": "workspace:*",
     "@reatom/framework": "^3.4.39",
     "@reatom/npm-react": "^3.8.6",
