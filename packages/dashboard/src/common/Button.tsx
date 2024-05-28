@@ -48,7 +48,7 @@ export const Button: React.FC<ButtonProps> = ({
       'text-sm',
       'disabled:opacity-50',
       variants[variant],
-      isSquare ? 'w-[32px] h-[32px] p-[0px_0px] flex-center' : 'w-fit h-[36px]',
+      isSquare ? 'w-[32px] h-[32px] !p-0 flex-center' : 'w-fit h-[36px]',
       className,
     )}
     {...props}

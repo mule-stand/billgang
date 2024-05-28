@@ -1,6 +1,6 @@
 import { fetchTransactions } from '../../api/index.js'
 import { reatomAsync, withDataAtom, onConnect, atom } from '@reatom/framework'
-export const PageSize = 1
+export const PageSize = 10
 
 export const pageNumberAtom = atom(1)
 export const getTransactions = reatomAsync((ctx) =>

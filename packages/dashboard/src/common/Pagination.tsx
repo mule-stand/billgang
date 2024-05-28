@@ -92,7 +92,7 @@ export const Pagination = ({
   }
 
   return (
-    <div className="flex gap-[8px] flex-wrap">
+    <div className="flex gap-2 flex-wrap">
       <Button
         variant={ButtonVariant.Secondary}
         onClick={() => isFirstPage || onPageChange(currentPage - 1)}
