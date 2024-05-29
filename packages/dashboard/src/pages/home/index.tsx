@@ -11,12 +11,14 @@ import {
   Heart,
   Medal,
   Star,
+  TopArrow,
 } from '../../assets/icons.js'
 import { LoadingSpinner } from '../../common/LoadingSpinner.js'
 // import ChartItem from '../../components/ChartItem/index.js'
 import ReferralBlock from '../../components/ReferralBlock/index.js'
 import StatItem from '../../components/StatItem/index.js'
 
+import { IconWrapper } from '../../common/IconWrapper.js'
 import {
   convertCfImageIdToUrl,
   formatPrice,
@@ -33,8 +35,8 @@ export const Home = () => {
   if (!data) return <LoadingSpinner />
 
   return (
-    <div className="grid w-full grid-cols-1 grid-rows-[repeat(4,min-content)] gap-[16px] sm:grid-cols-2 xl:grid-cols-4 ">
-      <div className="sm:col-span-2 row-span-2 mb-[24px] xl:col-span-4 xl:mb-0">
+    <div className="grid w-full grid-cols-1 grid-rows-[repeat(4,min-content)] gap-4 sm:grid-cols-2 xl:grid-cols-4 ">
+      <div className="sm:col-span-2 row-span-2 mb-6 xl:col-span-4 xl:mb-0">
         <ReferralBlock />
       </div>
       {/* <ChartItem
@@ -56,10 +58,10 @@ export const Home = () => {
       data={charts.data}
       />
 
-      <div className="col-span-1 h-[24px] text-lg font-bold sm:col-span-2 xl:col-span-4">
+      <div className="col-span-1 h-6 text-lg font-bold sm:col-span-2 xl:col-span-4">
         Your statistics
       </div> */}
-      <div className="mr-[16px] w-full flex flex-col">
+      <div className="mr-4 w-full flex flex-col">
         <StatItem
           Icon={Calendar}
           title="Customer since"
@@ -70,13 +72,20 @@ export const Home = () => {
           title="Total spent"
           value={formatPrice({ amount: data.totalSpent })}
         />
-        <StatItem Icon={Medal} title="Top" value={`#${data.ratingPlacement}`} />
+        <StatItem Icon={Medal} title="Top" value={`#${data.ratingPlacement}`}>
+          <div className="text-xs text-textSecondary flex items-center mt-2">
+            <IconWrapper Icon={TopArrow} className="mx-1" />
+            Spend ${data.spendMoreUsdForNextPlace} more to be #
+            {data.ratingPlacement + 1}
+          </div>
+        </StatItem>
         <StatItem
           Icon={Star}
           title="Average review"
           value={data.averageReview}
         />
       </div>
+
       {data.topSpenderProduct && (
         <StatItem
           image={convertCfImageIdToUrl(data.topSpenderProduct.image.cfId)}
@@ -88,7 +97,7 @@ export const Home = () => {
           })} spent`}
         />
       )}
-      <div className="mr-[16px] w-full flex flex-col">
+      <div className="mr-4 w-full flex flex-col">
         <StatItem Icon={Bag} title="Purchases" value={data.totalPurchases} />
         <StatItem Icon={Eye} title="Visits" value={data.visits} />
         <StatItem Icon={Billgang} title="Powered by" value={POWERED_BY} />

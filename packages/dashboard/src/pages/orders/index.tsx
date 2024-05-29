@@ -20,12 +20,12 @@ import {
   extractDateAndTime,
   formatPrice,
 } from '../../utils/index.js'
-interface ListItemType {
+type ListItemType = {
   children: React.ReactNode
   className?: string
 }
 
-interface OrderItem {
+type OrderItem = {
   id: string
   status: OrderStatus
   price: Price

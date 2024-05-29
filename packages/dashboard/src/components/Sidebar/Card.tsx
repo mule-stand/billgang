@@ -1,5 +1,5 @@
 import type React from 'react'
-interface CardProps {
+type CardProps = {
   email: string
   balance: string
 }

@@ -14,7 +14,7 @@ const defaultOptions = {
     'Content-Type': 'application/json',
   },
 }
-interface FetchOptions extends RequestInit {
+type FetchOptions = RequestInit & {
   params?: { [key: string]: string }
   returnHeaders?: boolean
 }

@@ -6,7 +6,7 @@ import tsupConfig from '../tsup.config.js'
 
 const a = tsupConfig
 
-interface ButtonProps {
+type ButtonProps = {
   children: ReactNode
   className?: string
   appName: string

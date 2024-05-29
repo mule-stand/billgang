@@ -1,19 +1,16 @@
-const referralSteps = [
-  {
-    caption: 'Share link',
-    description: 'Send the link to your friends in all convenient ways',
-  },
-  {
-    caption: 'Puchase',
-    description: 'They buy a product from our store',
-  },
-  {
-    caption: 'Percentages',
-    description: 'You get rewards',
-  },
-]
+type StepItemProps = {
+  caption: string
+  description: string
+  index: number
+  bar?: boolean
+}
 
-const StepItem = ({ caption, description, index, bar = true }) => (
+const StepItem: React.FC<StepItemProps> = ({
+  caption,
+  description,
+  index,
+  bar = true,
+}) => (
   <div className="flex text-sm text-textSecondary">
     <div className="mb-[4px] mr-[8px] flex flex-col items-center">
       <div className="flex-center mb-[4px] h-[24px] w-[24px] rounded-full bg-borderDefault font-bold">
@@ -30,7 +27,27 @@ const StepItem = ({ caption, description, index, bar = true }) => (
   </div>
 )
 
-const ReferralList = () => (
+type ReferralStep = {
+  caption: string
+  description: string
+}
+
+const referralSteps: ReferralStep[] = [
+  {
+    caption: 'Share link',
+    description: 'Send the link to your friends in all convenient ways',
+  },
+  {
+    caption: 'Purchase',
+    description: 'They buy a product from our store',
+  },
+  {
+    caption: 'Percentages',
+    description: 'You get rewards',
+  },
+]
+
+const ReferralList: React.FC = () => (
   <div>
     {referralSteps.map(({ caption, description }, i, a) => (
       <StepItem

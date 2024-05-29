@@ -70,7 +70,7 @@ const classNamesMap: Record<StatusVariant, string> = {
   error: 'bg-signalDangerBackground text-signalDanger',
 }
 
-interface StatusIndicatorProps {
+type StatusIndicatorProps = {
   status: string
   variant: StatusVariant
 }

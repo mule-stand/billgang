@@ -1,7 +1,7 @@
 import type React from 'react'
 import { ccn } from '../utils/index.js'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode
   variant?: keyof typeof variants
   className?: string

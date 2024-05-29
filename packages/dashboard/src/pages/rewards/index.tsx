@@ -1,10 +1,10 @@
 import { useAtom } from '@reatom/npm-react'
-import { LoadingSpinner } from '../../common/LoadingSpinner.js'
-import { IconWrapper } from '../../common/IconWrapper.js'
-import { type Price, formatPrice } from '../../utils/index.js'
 import { Bag, Confetti } from '../../assets/icons.js'
-import { getRewards } from './model.js'
 import { Button } from '../../common/Button.js'
+import { IconWrapper } from '../../common/IconWrapper.js'
+import { LoadingSpinner } from '../../common/LoadingSpinner.js'
+import { type Price, formatPrice } from '../../utils/index.js'
+import { getRewards } from './model.js'
 
 export const Rewards = () => {
   const [rewards] = useAtom(getRewards.dataAtom)
@@ -67,7 +67,7 @@ const Achievement = ({ achievement }: AchievementProps) => {
 
       <span className="items-center font-semibold flex mb-1 mt-4">
         <IconWrapper className="icon-wrapper w-6 h-6 rounded-lg" Icon={Bag} />
-        <div className="ml-2">{title}</div>
+        <div className="ml-2 text-center">{title}</div>
       </span>
       <span className="bg-surface100 text-center mb-4 text-sm">
         {description}
@@ -81,7 +81,7 @@ const Achievement = ({ achievement }: AchievementProps) => {
     </div>
   )
 }
-interface CircularProgressProps {
+type CircularProgressProps = {
   percentage: number
   radius?: number
   strokeWidth?: number

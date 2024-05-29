@@ -20,7 +20,7 @@ enum TransactionStatus {
   Removed = 'REMOVED',
 }
 
-interface Transaction {
+type Transaction = {
   id: string
   price: Price
   createdAt: string

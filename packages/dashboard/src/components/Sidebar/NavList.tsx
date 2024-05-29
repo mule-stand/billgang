@@ -28,9 +28,10 @@ const NavList = reatomComponent(({ ctx }) => {
       {sidebarItems.map(([text, Icon]) => {
         const isActive = text === route
         return (
-          <div
+          <button
+            type="button"
             onClick={() => routeAtom(ctx, text)}
-            className={`flex cursor-pointer items-center py-[12px] pl-[8px] ${
+            className={`flex cursor-pointer items-center py-[12px] pl-[8px] w-full ${
               isActive
                 ? 'rounded-[12px] bg-surface0 text-textPrimary'
                 : 'text-textSecondary'
@@ -45,7 +46,7 @@ const NavList = reatomComponent(({ ctx }) => {
             </div>
 
             <div>{text}</div>
-          </div>
+          </button>
         )
       })}
       <div className="flex cursor-pointer items-center py-[12px] pl-[8px]	text-signalDanger mt-[6px]">

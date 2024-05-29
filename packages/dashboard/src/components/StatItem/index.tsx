@@ -1,11 +1,12 @@
 import { IconWrapper } from '../../common/IconWrapper.js'
 
-interface StatItemProps {
+type StatItemProps = {
   Icon: React.FunctionComponent
   title: string
   value: string | number
   image?: string
   imageName?: string
+  children?: React.ReactNode
   // imageDesc?: string;
 }
 
@@ -15,6 +16,7 @@ const StatItem: React.FC<StatItemProps> = ({
   value,
   image,
   imageName,
+  children,
   // imageDesc,
 }) => (
   <div className="relative mb-[16px] flex w-full flex-col justify-between rounded-[12px] border-[1px] border-borderDefault flex-auto">
@@ -33,12 +35,15 @@ const StatItem: React.FC<StatItemProps> = ({
         </div>
       </div>
     )}
-    <div className="flex p-[24px_16px]">
-      <IconWrapper Icon={Icon} color="brandDefault" size="l" />
-      <div className="ml-[12px]">
-        <div className="text-sm text-textSecondary">{title}</div>
-        <div className="text-lg font-bold">{value}</div>
+    <div className={`px-4 ${children ? 'py-3' : 'p-6'}`}>
+      <div className="flex">
+        <IconWrapper Icon={Icon} color="brandDefault" size="l" />
+        <div className="ml-[12px]">
+          <div className="text-sm text-textSecondary">{title}</div>
+          <div className="text-lg font-bold">{value}</div>
+        </div>
       </div>
+      {children}
     </div>
   </div>
 )
