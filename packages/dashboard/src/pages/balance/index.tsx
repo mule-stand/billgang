@@ -6,10 +6,10 @@ import {
   pageNumberAtom,
 } from './model.js'
 
-import { Button } from '../../common/Button.js'
-import { IconWrapper } from '../../common/IconWrapper.js'
-import { LoadingSpinner } from '../../common/LoadingSpinner.js'
-import { Pagination } from '../../common/Pagination.js'
+import { Button } from '../../common/button.js'
+import { IconWrapper } from '../../common/icon-wrapper.js'
+import { LoadingSpinner } from '../../common/loading-spinner.js'
+import { Pagination } from '../../common/pagination.js'
 
 import { type Price, formatPrice } from '../../utils/index.js'
 
@@ -87,7 +87,7 @@ const renderTransaction = ({ id, price, status }: Transaction) => {
           size="m"
           Icon={iconStatusMap[status]}
         />
-        <div className="ml-[12px]">
+        <div className="ml-3">
           <div>{textStatusMap[status]}</div>
           <div className="text-textSecondary text-sm">ID: {id}</div>
         </div>
@@ -121,7 +121,7 @@ export const Balance = () => {
               {group.map(renderTransaction)}
             </div>
           ))}
-          <div className="flex h-[72px] align-middle justify-between px-[16px] mt-auto">
+          <div className="flex h-[72px] align-middle justify-between px-4 mt-auto">
             <div className="text-textSecondary flex-center">
               {getPaginationText(currentPage, transactions.totalCount)}
             </div>
@@ -139,23 +139,23 @@ export const Balance = () => {
   }
   return (
     <>
-      <div className="p-[24px] border rounded-[16px] border-borderDefault mb-[16px]">
-        <div className="text-sm text-brandDefault py-[8px] px-[12px] flex bg-surface0 rounded-[12px] mb-[16px]">
+      <div className="p-6 border rounded-2xl border-borderDefault mb-4">
+        <div className="text-sm text-brandDefault py-2 px-3 flex bg-surface0 rounded-xl mb-4">
           <Fire />
-          <div className="ml-[8px]">
+          <div className="ml-2">
             Top up your store balance below and get <b>25%</b> back.
           </div>
         </div>
         <div className="text-textSecondary">Your balance</div>
         <div className="flex items-baseline">
-          <div className="text-xxl font-bold mr-auto leading-[40px]">$0.00</div>
-          <Button className="mr-[16px] flex-center">
+          <div className="text-xxl font-bold mr-auto leading-10">$0.00</div>
+          <Button className="mr-4 flex-center">
             <IconWrapper color="surface100" Icon={Plus} />
-            <span className="ml-[4px]">Add balance</span>
+            <span className="ml-1">Add balance</span>
           </Button>
-          <Button variant="secondary" className="mr-[16px] flex-center">
+          <Button variant="secondary" className="mr-4 flex-center">
             <IconWrapper Icon={Question} />
-            <span className="ml-[4px]">Contact support</span>
+            <span className="ml-1">Contact support</span>
           </Button>
           <Button variant="secondary" isSquare>
             <IconWrapper Icon={ThreeDots} />

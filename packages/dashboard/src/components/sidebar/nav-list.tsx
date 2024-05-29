@@ -10,7 +10,7 @@ import {
   Question,
   Wallet,
 } from '../../assets/icons.js'
-import { IconWrapper } from '../../common/IconWrapper.js'
+import { IconWrapper } from '../../common/icon-wrapper.js'
 
 const sidebarItems: [Routes, React.FunctionComponent][] = [
   [Routes.Home, Home],
@@ -31,14 +31,14 @@ const NavList = reatomComponent(({ ctx }) => {
           <button
             type="button"
             onClick={() => routeAtom(ctx, text)}
-            className={`flex cursor-pointer items-center py-[12px] pl-[8px] w-full ${
+            className={`flex cursor-pointer items-center py-3 pl-2 w-full ${
               isActive
-                ? 'rounded-[12px] bg-surface0 text-textPrimary'
+                ? 'rounded-xl bg-surface0 text-textPrimary'
                 : 'text-textSecondary'
             }`}
             key={text}
           >
-            <div className="mr-[8px]">
+            <div className="mr-2">
               <IconWrapper
                 Icon={Icon}
                 color={isActive ? 'textPrimary' : 'textSecondary'}
@@ -49,8 +49,8 @@ const NavList = reatomComponent(({ ctx }) => {
           </button>
         )
       })}
-      <div className="flex cursor-pointer items-center py-[12px] pl-[8px]	text-signalDanger mt-[6px]">
-        <div className="mr-[8px]">
+      <div className="flex cursor-pointer items-center py-3 pl-2	text-signalDanger mt-[6px]">
+        <div className="mr-2">
           <IconWrapper Icon={Logout} color="signalDanger" size="s" />
         </div>
 

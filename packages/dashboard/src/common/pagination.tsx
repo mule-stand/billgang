@@ -1,5 +1,5 @@
 import { NextIcon, PreviousIcon } from '../assets/icons.js'
-import { Button } from './Button.js'
+import { Button } from './button.js'
 export type PaginationProps = {
   currentPage: number
   totalPages: number

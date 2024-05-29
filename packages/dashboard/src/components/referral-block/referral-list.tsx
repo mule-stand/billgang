@@ -12,16 +12,14 @@ const StepItem: React.FC<StepItemProps> = ({
   bar = true,
 }) => (
   <div className="flex text-sm text-textSecondary">
-    <div className="mb-[4px] mr-[8px] flex flex-col items-center">
-      <div className="flex-center mb-[4px] h-[24px] w-[24px] rounded-full bg-borderDefault font-bold">
+    <div className="mb-1 mr-2 flex flex-col items-center">
+      <div className="flex-center mb-1 h-6 w-6 rounded-full bg-borderDefault font-bold">
         {index}
       </div>
-      {bar && (
-        <div className="h-[38px] w-[4px] rounded-[16px] bg-borderDefault" />
-      )}
+      {bar && <div className="h-[38px] w-1 rounded-2xl bg-borderDefault" />}
     </div>
     <div>
-      <div className="mb-[4px] font-bold uppercase">{caption}</div>
+      <div className="mb-1 font-bold uppercase">{caption}</div>
       <div>{description}</div>
     </div>
   </div>

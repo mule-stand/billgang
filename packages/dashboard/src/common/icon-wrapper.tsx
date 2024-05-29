@@ -1,8 +1,8 @@
 import type React from 'react'
 import { ccn } from '../utils/index.js'
 const iconSizes = {
-  sm: 'w-[16px] h-[16px]',
-  s: 'w-[16px] h-[16px]',
+  sm: 'w-4 h-4',
+  s: 'w-4 h-4',
   m: 'w-[21px] h-[21px]',
   l: 'w-[28px] h-[28px]',
 }
@@ -17,9 +17,9 @@ const colorVariants = {
 
 const containerSizeClassNamesMap = {
   s: '',
-  sm: 'icon-wrapper w-[40px] h-[40px]',
-  m: 'icon-wrapper w-[44px] h-[44px]',
-  l: 'icon-wrapper w-[48px] h-[48px]',
+  sm: 'icon-wrapper w-10 h-10',
+  m: 'icon-wrapper w-11 h-11',
+  l: 'icon-wrapper w-12 h-12',
 }
 
 type IconWrapperProps = {

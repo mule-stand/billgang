@@ -19,7 +19,7 @@ export const Input = ({
       type="text"
       value={value}
       onChange={onChange}
-      className="block h-[48px] w-full rounded-[12px] border-none bg-surface0 p-[12px] align-middle placeholder:text-surface200"
+      className="block h-12 w-full rounded-xl border-none bg-surface0 p-3 align-middle placeholder:text-surface200"
       placeholder={placeholder}
       {...props}
     />

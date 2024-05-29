@@ -85,7 +85,7 @@ export const StatusIndicator = ({ status, variant }: StatusIndicatorProps) => {
       )}
     >
       <IconComponent />
-      <span className="ml-[4px]">{status}</span>
+      <span className="ml-1">{status}</span>
     </div>
   )
 }

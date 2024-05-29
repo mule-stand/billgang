@@ -1,8 +1,8 @@
 import { useAtom } from '@reatom/npm-react'
 import { Bag, Confetti } from '../../assets/icons.js'
-import { Button } from '../../common/Button.js'
-import { IconWrapper } from '../../common/IconWrapper.js'
-import { LoadingSpinner } from '../../common/LoadingSpinner.js'
+import { Button } from '../../common/button.js'
+import { IconWrapper } from '../../common/icon-wrapper.js'
+import { LoadingSpinner } from '../../common/loading-spinner.js'
 import { type Price, formatPrice } from '../../utils/index.js'
 import { getRewards } from './model.js'
 

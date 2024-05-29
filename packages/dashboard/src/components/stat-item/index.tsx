@@ -1,4 +1,4 @@
-import { IconWrapper } from '../../common/IconWrapper.js'
+import { IconWrapper } from '../../common/icon-wrapper.js'
 
 type StatItemProps = {
   Icon: React.FunctionComponent
@@ -19,17 +19,17 @@ const StatItem: React.FC<StatItemProps> = ({
   children,
   // imageDesc,
 }) => (
-  <div className="relative mb-[16px] flex w-full flex-col justify-between rounded-[12px] border-[1px] border-borderDefault flex-auto">
+  <div className="relative mb-4 flex w-full flex-col justify-between rounded-xl border-[1px] border-borderDefault flex-auto">
     {image && (
       <div
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('${image}')`,
         }}
-        className="flex h-full min-h-[300px] flex-col justify-end rounded-[12px] bg-cover bg-no-repeat p-[16px] text-white"
+        className="flex h-full min-h-[300px] flex-col justify-end rounded-xl bg-cover bg-no-repeat p-4 text-white"
       >
         <div>
           <div className="font-semibold">{imageName}</div>
-          {/* <div className="inline-block max-h-[32px] min-w-0 overflow-hidden text-xs">
+          {/* <div className="inline-block max-h-8 min-w-0 overflow-hidden text-xs">
             {imageDesc}
           </div> */}
         </div>
@@ -38,7 +38,7 @@ const StatItem: React.FC<StatItemProps> = ({
     <div className={`px-4 ${children ? 'py-3' : 'p-6'}`}>
       <div className="flex">
         <IconWrapper Icon={Icon} color="brandDefault" size="l" />
-        <div className="ml-[12px]">
+        <div className="ml-3">
           <div className="text-sm text-textSecondary">{title}</div>
           <div className="text-lg font-bold">{value}</div>
         </div>

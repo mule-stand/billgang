@@ -1,12 +1,12 @@
 import { useAtom } from '@reatom/npm-react'
 import React from 'react'
-import { IconWrapper } from '../../common/IconWrapper.js'
-import { LoadingSpinner } from '../../common/LoadingSpinner.js'
-import { Pagination } from '../../common/Pagination.js'
 import {
   StatusIndicator,
   type StatusVariant,
 } from '../../common/StatusIndicator.js'
+import { IconWrapper } from '../../common/icon-wrapper.js'
+import { LoadingSpinner } from '../../common/loading-spinner.js'
+import { Pagination } from '../../common/pagination.js'
 import {
   PageSize,
   getOrders,
@@ -64,7 +64,7 @@ export const ListItem: React.FC<ListItemType> = ({
   className = '',
 }) => (
   <div
-    className={`truncate border-b border-borderDefault p-[16px] pr-[24px] justify-start flex items-center ${className}`}
+    className={`truncate border-b border-borderDefault p-4 pr-6 justify-start flex items-center ${className}`}
   >
     {children}
   </div>
@@ -111,7 +111,7 @@ export const Orders = () => {
                   {item.review ? (
                     <div className="flex-center">
                       <IconWrapper Icon={Star} color="brandDefault" />
-                      <div className="ml-[4px]">{item.review.rating}</div>
+                      <div className="ml-1">{item.review.rating}</div>
                     </div>
                   ) : (
                     'None'
@@ -129,7 +129,7 @@ export const Orders = () => {
   return (
     <>
       <div className="m-[8px_0_16px_8px] font-bold text-lg">Orders</div>
-      <div className="border border-borderDefault rounded-[16px] flex justify-between flex-col flex-1">
+      <div className="border border-borderDefault rounded-2xl flex justify-between flex-col flex-1">
         <div className="grid grid-cols-[auto_repeat(5,minmax(0,min-content))]">
           <ListTitle>Invoice ID</ListTitle>
           <ListTitle>Status</ListTitle>
@@ -140,7 +140,7 @@ export const Orders = () => {
           {renderContent()}
         </div>
         {orders && (
-          <div className="flex h-[72px] align-middle justify-between px-[16px]">
+          <div className="flex h-[72px] align-middle justify-between px-4">
             <div className="text-textSecondary flex-center">
               {getPaginationText(currentPage, orders.totalCount)}
             </div>

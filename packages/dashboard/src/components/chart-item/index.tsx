@@ -6,7 +6,7 @@
 //   },
 // ) => {
 //   return (
-//     <div className="flex flex-col justify-between rounded-[12px] border-[1px] border-borderDefault p-[24px]">
+//     <div className="flex flex-col justify-between rounded-xl border-[1px] border-borderDefault p-6">
 //       <div className="text-textSecondary">{title}</div>
 //       <div className="text-xxl font-bold">{value}</div>
 //       <ResponsiveContainer width="100%" height={70}>

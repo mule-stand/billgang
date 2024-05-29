@@ -2,13 +2,13 @@
 // import { useState } from 'react'
 
 // import { Info } from '../../assets/icons.js'
-// import {Button} from '../../common/Button.js'
-// import {Input} from '../../common/Input.js'
+// import {Button} from '../../common/button.js'
+// import {Input} from '../../common/input.js'
 
 // const customTheme = {
 //   content: {
 //     inner:
-//       'relative flex max-h-[90dvh] flex-col bg-white shadow dark:bg-gray-700 rounded-[24px]',
+//       'relative flex max-h-[90dvh] flex-col bg-white shadow dark:bg-gray-700 rounded-3xl',
 //   },
 //   header: {
 //     close: {
@@ -43,11 +43,11 @@
 //             value="Affiliate Code"
 //           />
 //           <Input
-//             className="mt-[6px] mb-[16px]"
+//             className="mt-[6px] mb-4"
 //             id="affiliateCode"
 //             placeholder="Enter code here (e.g Join)"
 //           />
-//           <div className="p-[12px] bg-surface0 flex rounded-[12px] items-center">
+//           <div className="p-3 bg-surface0 flex rounded-xl items-center">
 //             <div className="h-[20px] w-[20px] mr-[10px] flex-center">
 //               <Info />
 //             </div>

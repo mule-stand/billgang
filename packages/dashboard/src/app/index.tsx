@@ -1,7 +1,7 @@
 import { atom } from '@reatom/framework'
 import { useAtom } from '@reatom/npm-react'
 
-import { Sidebar } from '../components/Sidebar/index.js'
+import { Sidebar } from '../components/sidebar/index.js'
 import { Balance } from '../pages/balance/index.js'
 import { Home } from '../pages/home/index.js'
 import { Orders } from '../pages/orders/index.js'

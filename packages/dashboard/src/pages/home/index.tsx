@@ -13,12 +13,12 @@ import {
   Star,
   TopArrow,
 } from '../../assets/icons.js'
-import { LoadingSpinner } from '../../common/LoadingSpinner.js'
-// import ChartItem from '../../components/ChartItem/index.js'
-import ReferralBlock from '../../components/ReferralBlock/index.js'
-import StatItem from '../../components/StatItem/index.js'
+import { LoadingSpinner } from '../../common/loading-spinner.js'
+// import ChartItem from '../../components/chart-item/index.js'
+import ReferralBlock from '../../components/referral-block/index.js'
+import StatItem from '../../components/stat-item/index.js'
 
-import { IconWrapper } from '../../common/IconWrapper.js'
+import { IconWrapper } from '../../common/icon-wrapper.js'
 import {
   convertCfImageIdToUrl,
   formatPrice,
