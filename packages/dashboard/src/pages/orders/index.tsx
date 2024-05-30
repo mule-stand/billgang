@@ -1,12 +1,15 @@
 import { useAtom } from '@reatom/npm-react'
 import React from 'react'
+import { IconWrapper } from '../../common/icon-wrapper.js'
+import { LoadingSpinner } from '../../common/loading-spinner.js'
+import { NoItemsBlock } from '../../common/no-items-block.js'
+import { PageTitle } from '../../common/page-title.js'
+import { Pagination } from '../../common/pagination.js'
 import {
   StatusIndicator,
   type StatusVariant,
-} from '../../common/StatusIndicator.js'
-import { IconWrapper } from '../../common/icon-wrapper.js'
-import { LoadingSpinner } from '../../common/loading-spinner.js'
-import { Pagination } from '../../common/pagination.js'
+} from '../../common/status-indicator.js'
+
 import {
   PageSize,
   getOrders,
@@ -20,32 +23,6 @@ import {
   extractDateAndTime,
   formatPrice,
 } from '../../utils/index.js'
-type ListItemType = {
-  children: React.ReactNode
-  className?: string
-}
-
-type OrderItem = {
-  id: string
-  status: OrderStatus
-  price: Price
-  gatewayName: string
-  time: string
-  review?: {
-    rating: number
-  }
-}
-
-type OrderStatus =
-  | 'NEW'
-  | 'PENDING'
-  | 'COMPLETED'
-  | 'CANCELLED'
-  | 'EXPIRED'
-  | 'FULL_DELIVERY_FAILURE'
-  | 'PARTIALLY_DELIVERED'
-  | 'REFUNDED'
-  | 'FAILED'
 
 const statusVariantMap: Record<OrderStatus, StatusVariant> = {
   NEW: 'warning',
@@ -59,10 +36,34 @@ const statusVariantMap: Record<OrderStatus, StatusVariant> = {
   FAILED: 'error',
 }
 
-export const ListItem: React.FC<ListItemType> = ({
-  children,
-  className = '',
-}) => (
+type ListItemType = {
+  children: React.ReactNode
+  className?: string
+}
+
+type OrderStatus =
+  | 'NEW'
+  | 'PENDING'
+  | 'COMPLETED'
+  | 'CANCELLED'
+  | 'EXPIRED'
+  | 'FULL_DELIVERY_FAILURE'
+  | 'PARTIALLY_DELIVERED'
+  | 'REFUNDED'
+  | 'FAILED'
+
+type OrderItem = {
+  id: string
+  status: OrderStatus
+  price: Price
+  gatewayName: string
+  time: string
+  review?: {
+    rating: number
+  }
+}
+
+const ListItem: React.FC<ListItemType> = ({ children, className = '' }) => (
   <div
     className={`truncate border-b border-borderDefault p-4 pr-6 justify-start flex items-center ${className}`}
   >
@@ -70,65 +71,57 @@ export const ListItem: React.FC<ListItemType> = ({
   </div>
 )
 
-export const ListTitle: React.FC<ListItemType> = ({ children }) => (
+const ListTitle: React.FC<ListItemType> = ({ children }) => (
   <ListItem className="text-sm text-textSecondary uppercase">
     {children}
   </ListItem>
 )
 
-export const Orders = () => {
+const OrderRow: React.FC<{ item: OrderItem }> = ({ item }) => {
+  const [date, time] = extractDateAndTime(item.time)
+  return (
+    <React.Fragment key={item.id}>
+      <ListItem>{item.id}</ListItem>
+      <ListItem>
+        <StatusIndicator
+          status={item.status}
+          variant={statusVariantMap[item.status]}
+        />
+      </ListItem>
+      <ListItem>{formatPrice(item.price)}</ListItem>
+      <ListItem>{item.gatewayName}</ListItem>
+      <ListItem>
+        <div>
+          <div>{date}</div>
+          <div className="text-xs text-textSecondary">{time}</div>
+        </div>
+      </ListItem>
+      <ListItem>
+        {item.review ? (
+          <div className="flex-center">
+            <IconWrapper Icon={Star} color="brandDefault" />
+            <div className="ml-1">{item.review.rating}</div>
+          </div>
+        ) : (
+          'None'
+        )}
+      </ListItem>
+    </React.Fragment>
+  )
+}
+
+export const Orders: React.FC = () => {
   const [orders] = useAtom(getOrders.dataAtom)
   const [currentPage, setCurrentPage] = useAtom(pageNumberAtom)
   const [pending] = useAtom((ctx) => ctx.spy(getOrders.pendingAtom) > 0)
-  const renderContent = () => {
-    if (pending) {
-      return <LoadingSpinner />
-    }
 
-    if (orders?.list?.length) {
-      return (
-        <>
-          {orders.list.map((item: OrderItem) => {
-            const [date, time] = extractDateAndTime(item.time)
-            return (
-              <React.Fragment key={item.id}>
-                <ListItem>{item.id}</ListItem>
-                <ListItem>
-                  <StatusIndicator
-                    status={item.status}
-                    variant={statusVariantMap[item.status]}
-                  />
-                </ListItem>
-                <ListItem>{formatPrice(item.price)}</ListItem>
-                <ListItem>{item.gatewayName}</ListItem>
-                <ListItem>
-                  <div>
-                    <div>{date}</div>
-                    <div className="text-xs text-textSecondary">{time}</div>
-                  </div>
-                </ListItem>
-                <ListItem>
-                  {item.review ? (
-                    <div className="flex-center">
-                      <IconWrapper Icon={Star} color="brandDefault" />
-                      <div className="ml-1">{item.review.rating}</div>
-                    </div>
-                  ) : (
-                    'None'
-                  )}
-                </ListItem>
-              </React.Fragment>
-            )
-          })}
-        </>
-      )
-    }
+  const isEmpty = !orders?.list?.length
+  const isLoadedAndFull = !pending && !isEmpty
 
-    return <div>No items</div>
-  }
   return (
     <>
-      <div className="m-[8px_0_16px_8px] font-bold text-lg">Orders</div>
+      <PageTitle title="Orders" />
+
       <div className="border border-borderDefault rounded-2xl flex justify-between flex-col flex-1">
         <div className="grid grid-cols-[auto_repeat(5,minmax(0,min-content))]">
           <ListTitle>Invoice ID</ListTitle>
@@ -137,9 +130,12 @@ export const Orders = () => {
           <ListTitle>Payment</ListTitle>
           <ListTitle>Date</ListTitle>
           <ListTitle>Review</ListTitle>
-          {renderContent()}
+          {isLoadedAndFull &&
+            orders.list.map((item: OrderItem) => (
+              <OrderRow key={item.id} item={item} />
+            ))}
         </div>
-        {orders && (
+        {isLoadedAndFull && (
           <div className="flex h-[72px] align-middle justify-between px-4">
             <div className="text-textSecondary flex-center">
               {getPaginationText(currentPage, orders.totalCount)}
@@ -153,6 +149,14 @@ export const Orders = () => {
             </div>
           </div>
         )}
+        {pending ? (
+          <LoadingSpinner />
+        ) : isEmpty ? (
+          <NoItemsBlock
+            title="Orders are empty"
+            description="Order history will be collected here"
+          />
+        ) : null}
       </div>
     </>
   )

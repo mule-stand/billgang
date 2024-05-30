@@ -3,39 +3,39 @@ import { Bag, Confetti } from '../../assets/icons.js'
 import { Button } from '../../common/button.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'
 import { LoadingSpinner } from '../../common/loading-spinner.js'
+import { NoItemsBlock } from '../../common/no-items-block.js'
+import { PageTitle } from '../../common/page-title.js'
+
 import { type Price, formatPrice } from '../../utils/index.js'
 import { getRewards } from './model.js'
 
 export const Rewards = () => {
   const [rewards] = useAtom(getRewards.dataAtom)
   const [pending] = useAtom((ctx) => ctx.spy(getRewards.pendingAtom) > 0)
+  const isEmpty = !rewards?.list?.length
+  const isLoadedAndFull = !pending && !isEmpty
 
-  const renderContent = () => {
-    if (pending) {
-      return <LoadingSpinner />
-    }
-    if (rewards === null) return
-
-    if (rewards?.length) {
-      return rewards.map((item: CustomerReward) => (
-        <Achievement key={item.id} achievement={item} />
-      ))
-    }
-
-    return <div>No items</div>
-  }
   return (
     <>
-      <div className="m-[8px_0_16px_8px]">
-        <div className="font-bold text-lg">Rewards</div>
-        <div className="text-textSecondary">
-          To unlock an exclusive reward, complete everything on this checklist
-        </div>
-      </div>
+      <PageTitle
+        title="Rewards"
+        description="To unlock an exclusive reward, complete everything on this checklist"
+      />
 
       <div className="justify-between grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-        {renderContent()}
+        {isLoadedAndFull &&
+          rewards.map((item: CustomerReward) => (
+            <Achievement key={item.id} achievement={item} />
+          ))}
       </div>
+      {pending ? (
+        <LoadingSpinner />
+      ) : isEmpty ? (
+        <NoItemsBlock
+          title="Rewards are empty"
+          description="Rewards will be collected here"
+        />
+      ) : null}
     </>
   )
 }

@@ -9,6 +9,8 @@ import {
 import { Button } from '../../common/button.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'
 import { LoadingSpinner } from '../../common/loading-spinner.js'
+import { NoItemsBlock } from '../../common/no-items-block.js'
+import { PageTitle } from '../../common/page-title.js'
 import { Pagination } from '../../common/pagination.js'
 
 import { type Price, formatPrice } from '../../utils/index.js'
@@ -135,7 +137,12 @@ export const Balance = () => {
       )
     }
 
-    return <div>No items</div>
+    return (
+      <NoItemsBlock
+        title="Transactions are empty"
+        description="This is where all your transactions will be"
+      />
+    )
   }
   return (
     <>
@@ -162,7 +169,7 @@ export const Balance = () => {
           </Button>
         </div>
       </div>
-      <div className="m-[8px_0_16px_8px] font-bold text-lg">Transactions</div>
+      <PageTitle title="Transactions" />
       <div className="flex flex-col flex-1">{renderContent()}</div>
     </>
   )
