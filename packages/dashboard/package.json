@@ -1,7 +1,9 @@
 {
   "name": "@billgang/dashboard",
   "type": "module",
-  "files": ["dist/"],
+  "files": [
+    "dist/"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -37,5 +39,8 @@
   },
   "peerDependencies": {
     "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "@ariakit/react": "^0.4.7"
   }
 }

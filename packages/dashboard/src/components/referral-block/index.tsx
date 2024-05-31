@@ -1,5 +1,5 @@
 import ReferralList from './referral-list.js'
-// import ReferralModal from './referral-modal.js'
+import ReferralModal from './referral-modal.js'
 
 const ReferralBlock = () => (
   <div className="h-full rounded-xl border-[1px] border-borderDefault p-6">
@@ -7,7 +7,9 @@ const ReferralBlock = () => (
     <div className="mb-3 text-textSecondary">
       Refer friends. Earn rewards. Make bank.
     </div>
-    <div className="mb-6">{/* <ReferralModal /> */}</div>
+    <div className="mb-6">
+      <ReferralModal />
+    </div>
     <ReferralList />
   </div>
 )

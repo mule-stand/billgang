@@ -34,11 +34,12 @@ export const Button: React.FC<ButtonProps> = ({
   <button
     className={ccn(
       'rounded-xl',
-      'p-[8px_16px]',
+      'py-2',
+      'px-4',
       'text-sm',
       'disabled:opacity-50',
       variants[variant],
-      isSquare ? 'w-8 h-8 !p-0 flex-center rounded-sm' : 'w-fit h-6',
+      isSquare ? 'w-8 h-8 !p-0 flex-center rounded-sm' : 'w-fit h-9',
       className,
     )}
     {...props}
