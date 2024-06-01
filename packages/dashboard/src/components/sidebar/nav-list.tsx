@@ -21,22 +21,42 @@ const sidebarItems: [Routes, React.FunctionComponent][] = [
   [Routes.Tickets, Question],
 ]
 
+interface NavItemProps {
+  children: React.ReactNode
+  className?: string
+  onClick?: () => void
+}
+
+const NavItem = ({ children, className = '', onClick }: NavItemProps) => (
+  <button
+    type="button"
+    className={`flex cursor-pointer items-center py-3 pl-2 pr-4 xl:pr-0 border-b border-transparent ${className}`}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+)
+
 const NavList = reatomComponent(({ ctx }) => {
   const [route] = useAtom(routeAtom)
+
+  const handleLogout = () => {
+    // logout logic here
+  }
+
   return (
-    <div>
+    <div className="xl:block flex overflow-x-auto">
       {sidebarItems.map(([text, Icon]) => {
         const isActive = text === route
         return (
-          <button
-            type="button"
+          <NavItem
+            key={text}
             onClick={() => routeAtom(ctx, text)}
-            className={`flex cursor-pointer items-center py-3 pl-2 w-full ${
+            className={`w-full ${
               isActive
-                ? 'rounded-xl bg-surface0 text-textPrimary'
+                ? 'xl:rounded-xl xl:bg-surface0 text-textPrimary !border-textPrimary'
                 : 'text-textSecondary'
             }`}
-            key={text}
           >
             <div className="mr-2">
               <IconWrapper
@@ -44,18 +64,19 @@ const NavList = reatomComponent(({ ctx }) => {
                 color={isActive ? 'textPrimary' : 'textSecondary'}
               />
             </div>
-
             <div>{text}</div>
-          </button>
+          </NavItem>
         )
       })}
-      <div className="flex cursor-pointer items-center py-3 pl-2	text-signalDanger mt-[6px]">
+      <NavItem
+        className="text-signalDanger lg:mt-[6px] text-nowrap"
+        onClick={handleLogout}
+      >
         <div className="mr-2">
           <IconWrapper Icon={Logout} color="signalDanger" size="s" />
         </div>
-
         <div>Log out</div>
-      </div>
+      </NavItem>
     </div>
   )
 })

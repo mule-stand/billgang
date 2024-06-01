@@ -27,9 +27,9 @@ const App = () => {
   const ContentComponent = RouteToRouteComponent[route]
 
   return (
-    <main className="h-full flex flex-grow flex-col lg:flex-row">
+    <main className="h-full flex flex-grow flex-col xl:flex-row">
       <Sidebar />
-      <div className="xl:p-[24px_40px_24px_24px] p-[24px_40px] flex flex-col max-w-[1120px] w-full">
+      <div className="xl:p-6 xl:pr-10 px-4 py-6 flex flex-col max-w-[1120px] w-full flex-1">
         <ContentComponent />
       </div>
     </main>

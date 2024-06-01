@@ -12,7 +12,7 @@ export const Sidebar = () => {
 
   const balance = '$0.00'
   return (
-    <div className="w-full border-r-[1px] border-borderDefault px-10 pt-6 lg:max-w-[320px] lg:pr-4">
+    <div className="w-full xl:border-r border-borderDefault px-4 py-0 xl:max-w-[320px] xl:pr-4">
       <Card email={data.email} balance={balance} />
       <NavList />
     </div>

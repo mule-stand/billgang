@@ -12,7 +12,7 @@ import { getRewards } from './model.js'
 export const Rewards = () => {
   const [rewards] = useAtom(getRewards.dataAtom)
   const [pending] = useAtom((ctx) => ctx.spy(getRewards.pendingAtom) > 0)
-  const isEmpty = !rewards?.list?.length
+  const isEmpty = !rewards?.length
   const isLoadedAndFull = !pending && !isEmpty
 
   return (

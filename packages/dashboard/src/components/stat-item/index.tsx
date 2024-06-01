@@ -7,6 +7,7 @@ type StatItemProps = {
   title: string
   value: string | number
   image?: string
+  className?: string
   imageName?: string
   children?: React.ReactNode
   // imageDesc?: string;
@@ -19,6 +20,7 @@ const StatItem: React.FC<StatItemProps> = ({
   image,
   imageName,
   children,
+  className,
   // imageDesc,
 }) => {
   const [isImageLoading, setIsImageLoading] = useState(true)
@@ -33,7 +35,9 @@ const StatItem: React.FC<StatItemProps> = ({
     setIsImageError(true)
   }
   return (
-    <div className="relative mb-4 flex w-full flex-col justify-between rounded-xl border-[1px] border-borderDefault flex-auto">
+    <div
+      className={`relative flex w-full flex-col justify-between rounded-xl border-[1px] border-borderDefault flex-auto ${className}`}
+    >
       {image && (
         <>
           <img
@@ -67,8 +71,8 @@ const StatItem: React.FC<StatItemProps> = ({
           )}
         </>
       )}
-      <div className={`px-4 ${children ? 'py-3' : 'p-6'}`}>
-        <div className="flex">
+      <div className={`px-4 py-4 ${children ? 'lg:py-3' : 'lg:p-6'}`}>
+        <div className="flex lg:flex-row flex-col">
           <IconWrapper Icon={Icon} color="brandDefault" size="l" />
           <div className="ml-3">
             <div className="text-sm text-textSecondary">{title}</div>

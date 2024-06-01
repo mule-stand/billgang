@@ -4,18 +4,13 @@ import { IconWrapper } from '../../common/icon-wrapper.js'
 import { LoadingSpinner } from '../../common/loading-spinner.js'
 import { NoItemsBlock } from '../../common/no-items-block.js'
 import { PageTitle } from '../../common/page-title.js'
-import { Pagination } from '../../common/pagination.js'
+import { PaginationWithRange } from '../../common/pagination.js'
 import {
   StatusIndicator,
   type StatusVariant,
 } from '../../common/status-indicator.js'
 
-import {
-  PageSize,
-  getOrders,
-  getPaginationText,
-  pageNumberAtom,
-} from './model.js'
+import { getOrders, pageNumberAtom } from './model.js'
 
 import { Star } from '../../assets/icons.js'
 import {
@@ -123,7 +118,7 @@ export const Orders: React.FC = () => {
       <PageTitle title="Orders" />
 
       <div className="border border-borderDefault rounded-2xl flex justify-between flex-col flex-1">
-        <div className="grid grid-cols-[auto_repeat(5,minmax(0,min-content))]">
+        <div className="overflow-x-auto grid grid-cols-[minmax(120px,auto)_repeat(5,minmax(min-content,auto))]">
           <ListTitle>Invoice ID</ListTitle>
           <ListTitle>Status</ListTitle>
           <ListTitle>Value</ListTitle>
@@ -136,18 +131,11 @@ export const Orders: React.FC = () => {
             ))}
         </div>
         {isLoadedAndFull && (
-          <div className="flex h-[72px] align-middle justify-between px-4">
-            <div className="text-textSecondary flex-center">
-              {getPaginationText(currentPage, orders.totalCount)}
-            </div>
-            <div className="flex-center">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={Math.ceil(orders.totalCount / PageSize)}
-                onPageChange={setCurrentPage}
-              />
-            </div>
-          </div>
+          <PaginationWithRange
+            currentPage={currentPage}
+            totalCount={orders.totalCount}
+            onPageChange={setCurrentPage}
+          />
         )}
         {pending ? (
           <LoadingSpinner />

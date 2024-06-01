@@ -1,17 +1,12 @@
 import { useAtom } from '@reatom/npm-react'
-import {
-  PageSize,
-  getPaginationText,
-  getTransactions,
-  pageNumberAtom,
-} from './model.js'
+import { getTransactions, pageNumberAtom } from './model.js'
 
 import { Button } from '../../common/button.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'
 import { LoadingSpinner } from '../../common/loading-spinner.js'
 import { NoItemsBlock } from '../../common/no-items-block.js'
 import { PageTitle } from '../../common/page-title.js'
-import { Pagination } from '../../common/pagination.js'
+import { PaginationWithRange } from '../../common/pagination.js'
 
 import { type Price, formatPrice } from '../../utils/index.js'
 
@@ -123,16 +118,11 @@ export const Balance = () => {
               {group.map(renderTransaction)}
             </div>
           ))}
-          <div className="flex h-[72px] align-middle justify-between px-4 mt-auto">
-            <div className="text-textSecondary flex-center">
-              {getPaginationText(currentPage, transactions.totalCount)}
-            </div>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={Math.ceil(transactions.totalCount / PageSize)}
-              onPageChange={setCurrentPage}
-            />
-          </div>
+          <PaginationWithRange
+            currentPage={currentPage}
+            totalCount={transactions.totalCount}
+            onPageChange={setCurrentPage}
+          />
         </>
       )
     }
@@ -154,19 +144,26 @@ export const Balance = () => {
           </div>
         </div>
         <div className="text-textSecondary">Your balance</div>
-        <div className="flex items-baseline">
-          <div className="text-xxl font-bold mr-auto leading-10">$0.00</div>
-          <Button className="mr-4 flex-center">
+        <div className="flex items-baseline flex-col md:flex-row">
+          <div className="text-xxl font-bold mr-auto leading-10 mb-4 md:mb-0">
+            $0.00
+          </div>
+          <Button className="mr-4 flex-center mb-2 md:mb-0 w-full md:w-auto">
             <IconWrapper color="surface100" Icon={Plus} />
             <span className="ml-1">Add balance</span>
           </Button>
-          <Button variant="secondary" className="mr-4 flex-center">
-            <IconWrapper Icon={Question} />
-            <span className="ml-1">Contact support</span>
-          </Button>
-          <Button variant="secondary" isSquare>
-            <IconWrapper Icon={ThreeDots} />
-          </Button>
+          <div className="flex w-full md:w-auto">
+            <Button
+              variant="secondary"
+              className="mr-2 md:mr-4 flex-center w-full md:w-auto"
+            >
+              <IconWrapper Icon={Question} />
+              <span className="ml-1">Contact support</span>
+            </Button>
+            <Button variant="secondary" isSquare>
+              <IconWrapper Icon={ThreeDots} />
+            </Button>
+          </div>
         </div>
       </div>
       <PageTitle title="Transactions" />
