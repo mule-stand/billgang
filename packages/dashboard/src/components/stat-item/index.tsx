@@ -72,7 +72,7 @@ const StatItem: React.FC<StatItemProps> = ({
         </>
       )}
       <div className={`px-4 py-4 ${children ? 'lg:py-3' : 'lg:p-6'}`}>
-        <div className="flex lg:flex-row flex-col">
+        <div className={`flex lg:flex-row ${image ? '' : 'flex-col'}`}>
           <IconWrapper Icon={Icon} color="brandDefault" size="l" />
           <div className="ml-3">
             <div className="text-sm text-textSecondary">{title}</div>
