@@ -30,7 +30,7 @@ interface NavItemProps {
 const NavItem = ({ children, className = '', onClick }: NavItemProps) => (
   <button
     type="button"
-    className={`flex cursor-pointer items-center py-3 pl-2 pr-4 xl:pr-0 border-b border-transparent ${className}`}
+    className={`xl:border-none flex cursor-pointer items-center py-3 pl-2 pr-4 xl:pr-0 border-b border-transparent ${className}`}
     onClick={onClick}
   >
     {children}
@@ -52,7 +52,7 @@ const NavList = reatomComponent(({ ctx }) => {
           <NavItem
             key={text}
             onClick={() => routeAtom(ctx, text)}
-            className={`w-full ${
+            className={`flex-1 ${
               isActive
                 ? 'xl:rounded-xl xl:bg-surface0 text-textPrimary !border-textPrimary'
                 : 'text-textSecondary'
