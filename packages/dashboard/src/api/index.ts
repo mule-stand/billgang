@@ -74,7 +74,7 @@ export const fetchWithPages = async ({ url, PageNumber }: PageWithUrlType) => {
     },
     returnHeaders: true,
   })
-  const totalCount = res.headers.get('x-pagination-total')
+  const totalCount = Number(res.headers.get('x-pagination-total'))
   return { list: res.data, totalCount }
 }
 export const fetchOrders = ({ PageNumber }: PageType) =>

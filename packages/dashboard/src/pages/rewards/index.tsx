@@ -1,4 +1,5 @@
 import { useAtom } from '@reatom/npm-react'
+import { z } from 'zod'
 import { Bag, Confetti } from '../../assets/icons.js'
 import { Button } from '../../common/button.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'
@@ -6,8 +7,13 @@ import { LoadingSpinner } from '../../common/loading-spinner.js'
 import { NoItemsBlock } from '../../common/no-items-block.js'
 import { PageTitle } from '../../common/page-title.js'
 
-import { type Price, formatPrice } from '../../utils/index.js'
-import { getRewards } from './model.js'
+import { formatPrice } from '../../utils/index.js'
+import {
+  AchievementType,
+  type CustomerReward,
+  RewardType,
+  getRewards,
+} from './model.js'
 
 export const Rewards = () => {
   const [rewards] = useAtom(getRewards.dataAtom)
@@ -24,7 +30,7 @@ export const Rewards = () => {
 
       <div className="justify-between grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {isLoadedAndFull &&
-          rewards.map((item: CustomerReward) => (
+          rewards.map((item) => (
             <Achievement key={item.id} achievement={item} />
           ))}
       </div>
@@ -40,7 +46,7 @@ export const Rewards = () => {
   )
 }
 
-const Achievement = ({ achievement }: AchievementProps) => {
+const Achievement = ({ achievement }: { achievement: CustomerReward }) => {
   const [title, description] = formatAchievementTitleDescription(achievement)
   const [percentageProgress, progress, goal] =
     calculateProgressPercentageAndComplete(achievement)
@@ -81,6 +87,7 @@ const Achievement = ({ achievement }: AchievementProps) => {
     </div>
   )
 }
+
 type CircularProgressProps = {
   percentage: number
   radius?: number
@@ -128,114 +135,6 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
       </span>
     </div>
   )
-}
-
-export enum RewardType {
-  Balance = 'BALANCE',
-  Product = 'PRODUCT',
-}
-
-type BalanceRewardOptions = { balance: Price }
-
-type ProductRewardsOptions = {
-  productsWithVariants: {
-    id: number
-    variantId: number
-    productName: string
-    variantName: string
-    quantity: number
-  }[]
-}
-
-export enum AchievementType {
-  Spend = 'SPEND_AMOUNT',
-  Order = 'ORDER_COUNT',
-  Referral = 'REFER_FRIEND',
-  Review = 'LEAVE_REVIEW',
-}
-
-type SpendAchievementOptions = {
-  forEach: number
-}
-
-type OrderAchievementOptions = {
-  ordersCount: number
-}
-
-type ReferralAchievementOptions = {
-  minReferrals: number
-  minCompletedOrders: number
-}
-
-type ReviewAchievementOptions = {
-  minReviews: number
-  minStars: number
-}
-
-type RewardRule =
-  | {
-      id: number
-      rewardType: RewardType.Balance
-      rewardOptions: BalanceRewardOptions
-      ruleType: AchievementType.Spend
-      ruleOptions: SpendAchievementOptions
-    }
-  | {
-      id: number
-      rewardType: RewardType.Balance
-      rewardOptions: BalanceRewardOptions
-      ruleType: AchievementType.Order
-      ruleOptions: OrderAchievementOptions
-    }
-  | {
-      id: number
-      rewardType: RewardType.Balance
-      rewardOptions: BalanceRewardOptions
-      ruleType: AchievementType.Referral
-      ruleOptions: ReferralAchievementOptions
-    }
-  | {
-      id: number
-      rewardType: RewardType.Balance
-      rewardOptions: BalanceRewardOptions
-      ruleType: AchievementType.Review
-      ruleOptions: ReviewAchievementOptions
-    }
-  | {
-      id: number
-      rewardType: RewardType.Product
-      rewardOptions: ProductRewardsOptions
-      ruleType: AchievementType.Spend
-      ruleOptions: SpendAchievementOptions
-    }
-  | {
-      id: number
-      rewardType: RewardType.Product
-      rewardOptions: ProductRewardsOptions
-      ruleType: AchievementType.Order
-      ruleOptions: OrderAchievementOptions
-    }
-  | {
-      id: number
-      rewardType: RewardType.Product
-      rewardOptions: ProductRewardsOptions
-      ruleType: AchievementType.Referral
-      ruleOptions: ReferralAchievementOptions
-    }
-  | {
-      id: number
-      rewardType: RewardType.Product
-      rewardOptions: ProductRewardsOptions
-      ruleType: AchievementType.Review
-      ruleOptions: ReviewAchievementOptions
-    }
-
-type CustomerReward = {
-  id: number
-  progress: number
-  createdAt: string
-  completedAt: string | null
-  rewardRule: RewardRule
 }
 
 const formatAchievementReward = (achievement: CustomerReward): string => {

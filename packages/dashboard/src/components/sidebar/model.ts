@@ -1,6 +1,14 @@
 import { onConnect, reatomAsync, withDataAtom } from '@reatom/framework'
-import { fetchDashInfo } from '../../api/index.js'
+import { z } from 'zod'
 
-export const getDashInfo = reatomAsync(fetchDashInfo).pipe(withDataAtom(null))
+import { fetchDashInfo } from '../../api/index.js'
+import { parseResult } from '../../utils/index.js'
+
+const DashSchema = z.object({
+  email: z.string(),
+})
+export const getDashInfo = reatomAsync(async () =>
+  parseResult(await fetchDashInfo(), DashSchema),
+).pipe(withDataAtom(null))
 
 onConnect(getDashInfo.dataAtom, getDashInfo)

@@ -17,6 +17,7 @@ import { LoadingSpinner } from '../../common/loading-spinner.js'
 // import ChartItem from '../../components/chart-item/index.js'
 import ReferralBlock from '../../components/referral-block/index.js'
 import StatItem from '../../components/stat-item/index.js'
+import { getHome } from './model.js'
 
 import { IconWrapper } from '../../common/icon-wrapper.js'
 import {
@@ -24,7 +25,6 @@ import {
   formatPrice,
   formatTimestamp,
 } from '../../utils/index.js'
-import { getHome } from './model.js'
 
 const POWERED_BY = 'Billgang'
 const STORE = 'D4RK'
@@ -99,7 +99,7 @@ export const Home = () => {
           Icon={Crown}
           title="Top spent"
           value={`${formatPrice({
-            amount: data.topSpenderProduct.amountSpentUsd,
+            amount: data.topSpenderProduct.amountSpentUsd || 0,
           })} spent`}
         />
       )}

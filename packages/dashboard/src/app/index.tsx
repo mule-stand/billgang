@@ -19,6 +19,8 @@ const RouteToRouteComponent: Record<Routes, React.FunctionComponent> = {
   [Routes.Rewards]: Rewards,
   [Routes.Balance]: Balance,
   [Routes.Tickets]: Template,
+  // [Routes.OTP]: OTP,
+  // [Routes.Login]: Login,
 }
 
 const App = () => {

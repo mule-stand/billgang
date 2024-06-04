@@ -56,18 +56,22 @@ const ErrorIcon: React.FC = () => (
   </svg>
 )
 
-export type StatusVariant = 'success' | 'warning' | 'error'
+export enum StatusVariant {
+  Success = 1,
+  Warning = 2,
+  Error = 3,
+}
 
 const iconMap: Record<StatusVariant, React.FC> = {
-  success: SuccessIcon,
-  warning: WarningIcon,
-  error: ErrorIcon,
+  [StatusVariant.Success]: SuccessIcon,
+  [StatusVariant.Warning]: WarningIcon,
+  [StatusVariant.Error]: ErrorIcon,
 }
 
 const classNamesMap: Record<StatusVariant, string> = {
-  success: 'bg-successBackground text-successText',
-  warning: 'bg-warningBackground text-warningText',
-  error: 'bg-signalDangerBackground text-signalDanger',
+  [StatusVariant.Success]: 'bg-successBackground text-successText',
+  [StatusVariant.Warning]: 'bg-warningBackground text-warningText',
+  [StatusVariant.Error]: 'bg-signalDangerBackground text-signalDanger',
 }
 
 type StatusIndicatorProps = {

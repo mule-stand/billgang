@@ -1,5 +1,4 @@
 import { useAtom } from '@reatom/npm-react'
-import { getTransactions, pageNumberAtom } from './model.js'
 
 import { Button } from '../../common/button.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'
@@ -7,23 +6,16 @@ import { LoadingSpinner } from '../../common/loading-spinner.js'
 import { NoItemsBlock } from '../../common/no-items-block.js'
 import { PageTitle } from '../../common/page-title.js'
 import { PaginationWithRange } from '../../common/pagination.js'
+import {
+  type Transaction,
+  TransactionStatus,
+  getTransactions,
+  pageNumberAtom,
+} from './model.js'
 
-import { type Price, formatPrice } from '../../utils/index.js'
+import { formatPrice } from '../../utils/index.js'
 
 import { Fire, Minus, Plus, Question, ThreeDots } from '../../assets/icons.js'
-
-enum TransactionStatus {
-  Added = 'ADDED',
-  Removed = 'REMOVED',
-}
-
-type Transaction = {
-  id: string
-  price: Price
-  createdAt: string
-  description: string
-  status: TransactionStatus
-}
 
 const iconStatusMap = {
   [TransactionStatus.Added]: Plus,
@@ -45,9 +37,7 @@ const textStatusMap = {
   [TransactionStatus.Removed]: 'Payment',
 }
 
-const groupTransactionsByDate = (
-  transactions: Transaction[],
-): Record<string, Transaction[]> => {
+const groupTransactionsByDate = (transactions: Transaction[]) => {
   const result: Record<string, Transaction[]> = {}
   const today = new Date()
 

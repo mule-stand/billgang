@@ -1,9 +1,13 @@
+import { z } from 'zod'
 type ClassName = string | undefined | false | null
-export type Price = {
-  amount: number
-  currency?: string
-  quantity?: number
-}
+
+export const PriceSchema = z.object({
+  amount: z.number(),
+  currency: z.string().optional(),
+  quantity: z.number().optional(),
+})
+
+export type Price = z.infer<typeof PriceSchema>
 
 export const ccn = (...classNames: ClassName[]) => {
   return classNames.filter((name) => !!name).join(' ')
@@ -31,7 +35,7 @@ export const formatPrice = (price: Price): string => {
   return formatter.format(amount)
 }
 
-export const formatTimestamp = (timestamp: number) => {
+export const formatTimestamp = (timestamp: number | string) => {
   const date = new Date(timestamp)
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -54,4 +58,18 @@ export const extractDateAndTime = (isoTime: string) => {
   const timeString = date.toLocaleString('en-US', timeOptions)
 
   return [dateString, timeString]
+}
+
+export const parseResult = <T extends z.ZodTypeAny>(
+  data: unknown,
+  schema: T,
+) => {
+  try {
+    return schema.parse(data) as z.infer<T>
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.error(err, err.issues)
+    }
+    return null
+  }
 }

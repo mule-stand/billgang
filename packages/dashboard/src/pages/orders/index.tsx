@@ -1,5 +1,7 @@
 import { useAtom } from '@reatom/npm-react'
 import React from 'react'
+
+import { Star } from '../../assets/icons.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'
 import { LoadingSpinner } from '../../common/loading-spinner.js'
 import { NoItemsBlock } from '../../common/no-items-block.js'
@@ -7,55 +9,31 @@ import { PageTitle } from '../../common/page-title.js'
 import { PaginationWithRange } from '../../common/pagination.js'
 import {
   StatusIndicator,
-  type StatusVariant,
+  StatusVariant,
 } from '../../common/status-indicator.js'
-
-import { getOrders, pageNumberAtom } from './model.js'
-
-import { Star } from '../../assets/icons.js'
+import { extractDateAndTime, formatPrice } from '../../utils/index.js'
 import {
-  type Price,
-  extractDateAndTime,
-  formatPrice,
-} from '../../utils/index.js'
+  type OrderItem,
+  OrderStatus,
+  getOrders,
+  pageNumberAtom,
+} from './model.js'
 
 const statusVariantMap: Record<OrderStatus, StatusVariant> = {
-  NEW: 'warning',
-  PENDING: 'warning',
-  COMPLETED: 'success',
-  CANCELLED: 'error',
-  EXPIRED: 'error',
-  FULL_DELIVERY_FAILURE: 'error',
-  PARTIALLY_DELIVERED: 'warning',
-  REFUNDED: 'success',
-  FAILED: 'error',
+  [OrderStatus.New]: StatusVariant.Warning,
+  [OrderStatus.Pending]: StatusVariant.Warning,
+  [OrderStatus.Completed]: StatusVariant.Success,
+  [OrderStatus.Cancelled]: StatusVariant.Error,
+  [OrderStatus.Expired]: StatusVariant.Error,
+  [OrderStatus.FullDeliveryFailure]: StatusVariant.Error,
+  [OrderStatus.PartiallyDelivered]: StatusVariant.Warning,
+  [OrderStatus.Refunded]: StatusVariant.Success,
+  [OrderStatus.Failed]: StatusVariant.Error,
 }
 
 type ListItemType = {
   children: React.ReactNode
   className?: string
-}
-
-type OrderStatus =
-  | 'NEW'
-  | 'PENDING'
-  | 'COMPLETED'
-  | 'CANCELLED'
-  | 'EXPIRED'
-  | 'FULL_DELIVERY_FAILURE'
-  | 'PARTIALLY_DELIVERED'
-  | 'REFUNDED'
-  | 'FAILED'
-
-type OrderItem = {
-  id: string
-  status: OrderStatus
-  price: Price
-  gatewayName: string
-  time: string
-  review?: {
-    rating: number
-  }
 }
 
 const ListItem: React.FC<ListItemType> = ({ children, className = '' }) => (
@@ -105,7 +83,7 @@ const OrderRow: React.FC<{ item: OrderItem }> = ({ item }) => {
   )
 }
 
-export const Orders: React.FC = () => {
+export const Orders = () => {
   const [orders] = useAtom(getOrders.dataAtom)
   const [currentPage, setCurrentPage] = useAtom(pageNumberAtom)
   const [pending] = useAtom((ctx) => ctx.spy(getOrders.pendingAtom) > 0)
