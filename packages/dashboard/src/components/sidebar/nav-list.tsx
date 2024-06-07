@@ -1,4 +1,5 @@
-import { reatomComponent, useAtom } from '@reatom/npm-react'
+import { reatomComponent, useAction, useAtom } from '@reatom/npm-react'
+
 import { routeAtom } from '../../app/index.js'
 import { Routes } from '../../app/routes.js'
 import {
@@ -10,6 +11,7 @@ import {
   Question,
   Wallet,
 } from '../../assets/icons.js'
+import { logoutCustomer } from '../../auth/model.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'
 
 const sidebarItems: [Routes, React.FunctionComponent][] = [
@@ -39,10 +41,7 @@ const NavItem = ({ children, className = '', onClick }: NavItemProps) => (
 
 const NavList = reatomComponent(({ ctx }) => {
   const [route] = useAtom(routeAtom)
-
-  const handleLogout = () => {
-    // logout logic here
-  }
+  const handleLogout = useAction(logoutCustomer)
 
   return (
     <div className="xl:block flex overflow-x-auto">

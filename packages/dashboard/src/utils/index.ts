@@ -73,3 +73,21 @@ export const parseResult = <T extends z.ZodTypeAny>(
     return null
   }
 }
+
+export const fromLocalStorage = <T>(key: string): T | null => {
+  const value = window.localStorage.getItem(key)
+  if (value === null) return null
+  try {
+    return JSON.parse(value)
+  } catch {
+    return value as T
+  }
+}
+
+export const toLocalStorage = (key: string, value: unknown) => {
+  if (value === null || typeof value !== 'object') {
+    window.localStorage.setItem(key, String(value))
+  }
+  const jsonString = JSON.stringify(value)
+  window.localStorage.setItem(key, jsonString)
+}

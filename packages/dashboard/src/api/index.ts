@@ -1,20 +1,17 @@
+import { logoutCustomer, tokenAtom } from '../auth/model.js'
+import { ctx } from '../index.js'
 // rewards user
+// export const shopDomen = 'dfbd.billgang.store'
 // const customerToken =
 //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY4Njg2MiIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTk2NTQ2OX0.7-2-sy0fje93JzyXNY5JK6a1CbOPQPVDlJ93Ul3kH34'
 // const shopId = '38332d9f-3bb6-4b3f-ac68-90151b968958'
 
 // default user
-
+export const shopDomen = 'min.billgang.store'
 const customerToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY3NjQ1MSIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTExMTYxOX0.L-3B2deA2RVzBPrGWxMEGkTgq6wX-yafMhpSSp7EvQM'
 const shopId = '15124f8d-2c8c-4dda-a04c-31c16816f9b6'
-
-const defaultOptions = {
-  headers: {
-    Authorization: `Bearer ${customerToken}`,
-    'Content-Type': 'application/json',
-  },
-}
+const UNAUTHORIZED_STATUS_CODE = 401
 type FetchOptions = RequestInit & {
   params?: { [key: string]: string }
   returnHeaders?: boolean
@@ -28,9 +25,19 @@ type PageWithUrlType = PageType & {
 }
 
 const apiUrl = 'https://customers-api.billgang.com'
+export const apiUrlWithShopId = `${apiUrl}/${shopId}`
+export const apiUrlWithShopDomen = `${apiUrl}/${shopDomen}`
+
 async function request(baseURL: string, options: FetchOptions = {}) {
-  const url = new URL(`${apiUrl}/${shopId}/${baseURL}`)
   const { params, returnHeaders, ...fetchOptions } = options
+
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${customerToken}`,
+  }
+  // console.log('tokenAtom', ctx.get(tokenAtom))
+
+  const url = new URL(`${apiUrlWithShopId}/${baseURL}`)
 
   if (params) {
     for (const [key, value] of Object.entries(params)) {
@@ -42,8 +49,8 @@ async function request(baseURL: string, options: FetchOptions = {}) {
 
   try {
     const response = await fetch(url.toString(), {
-      ...defaultOptions,
       ...fetchOptions,
+      headers,
     })
     if (!response.ok) {
       throw response
@@ -54,7 +61,15 @@ async function request(baseURL: string, options: FetchOptions = {}) {
     }
     return data
   } catch (error) {
-    console.error('Fetch error:', error)
+    if (
+      error instanceof Response &&
+      error.status === UNAUTHORIZED_STATUS_CODE
+    ) {
+      console.error('Unauthorized error, token might be invalid:', error)
+      logoutCustomer(ctx)
+    } else {
+      console.error('Fetch error:', error)
+    }
     throw error
   }
 }
@@ -63,7 +78,6 @@ export const fetchDashInfo = () => request('customers/dash/info')
 export const fetchHome = () => request('customers/dash/dashboard/home')
 export const fetchBalance = () => request('customers/dash/dashboard/home')
 export const fetchRewards = () => request('customers/rewards')
-
 export const PageSize = 10
 
 export const fetchWithPages = async ({ url, PageNumber }: PageWithUrlType) => {

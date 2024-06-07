@@ -14,7 +14,6 @@ const ProductSchema = z.object({
   image: ImageSchema,
   amountSpentUsd: z.number().optional(),
   purchasedTimes: z.number().int(),
-  // cfImageId: z.string(),
 })
 
 const HomeSchema = z.object({

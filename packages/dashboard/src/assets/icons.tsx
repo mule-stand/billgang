@@ -1,7 +1,7 @@
 export const D4RK = () => (
   <svg
-    width="28"
-    height="28"
+    width="100%"
+    height="100%"
     aria-hidden="true"
     viewBox="0 0 28 28"
     fill="none"

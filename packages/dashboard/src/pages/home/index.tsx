@@ -40,7 +40,7 @@ export const Home = () => {
   if (!data) return <LoadingSpinner />
 
   return (
-    <div className="grid w-full grid-rows-[repeat(auto,min-content)] gap-4 grid-cols-2 lg:grid-cols-4 ">
+    <div className="grid w-full grid-rows-[repeat(auto,min-content)] gap-4 grid-cols-2 lg:grid-cols-4 lg:pb-6">
       <div className="col-span-2 lg:col-span-4 row-span-2">
         <ReferralBlock />
       </div>
