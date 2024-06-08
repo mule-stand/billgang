@@ -7,10 +7,16 @@ import { ctx } from '../index.js'
 // const shopId = '38332d9f-3bb6-4b3f-ac68-90151b968958'
 
 // default user
+// const customerToken =
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY3NjQ1MSIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTExMTYxOX0.L-3B2deA2RVzBPrGWxMEGkTgq6wX-yafMhpSSp7EvQM'
 export const shopDomen = 'min.billgang.store'
-const customerToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY3NjQ1MSIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMTExMTYxOX0.L-3B2deA2RVzBPrGWxMEGkTgq6wX-yafMhpSSp7EvQM'
-const shopId = '15124f8d-2c8c-4dda-a04c-31c16816f9b6'
+const shopId = '71676f46-2af8-4519-8901-7550f14ad15a'
+
+// oreshaver
+//export const shopDomen oreshaver.billgang.store/
+// const shopId = '15124f8d-2c8c-4dda-a04c-31c16816f9b6'
+
+//const customerToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY5MDQ0NyIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMzA0Mjg0MH0.ehBdy8JxhriwhTaTPuyxKmOLgGMW67NdVBEtSc9ssRE'
 const UNAUTHORIZED_STATUS_CODE = 401
 type FetchOptions = RequestInit & {
   params?: { [key: string]: string }
@@ -30,12 +36,11 @@ export const apiUrlWithShopDomen = `${apiUrl}/${shopDomen}`
 
 async function request(baseURL: string, options: FetchOptions = {}) {
   const { params, returnHeaders, ...fetchOptions } = options
-
+  const customerToken = ctx.get(tokenAtom)
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${customerToken}`,
   }
-  // console.log('tokenAtom', ctx.get(tokenAtom))
 
   const url = new URL(`${apiUrlWithShopId}/${baseURL}`)
 
