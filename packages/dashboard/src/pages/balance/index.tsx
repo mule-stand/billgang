@@ -150,7 +150,7 @@ export const Balance = () => {
               <IconWrapper Icon={Question} />
               <span className="ml-1">Contact support</span>
             </Button>
-            <Button variant="secondary" isSquare>
+            <Button variant="secondary" isSquare className="rounded-xl h-9 w-9">
               <IconWrapper Icon={ThreeDots} />
             </Button>
           </div>

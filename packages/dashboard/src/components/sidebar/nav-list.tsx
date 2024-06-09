@@ -32,7 +32,7 @@ interface NavItemProps {
 const NavItem = ({ children, className = '', onClick }: NavItemProps) => (
   <button
     type="button"
-    className={`xl:border-none flex cursor-pointer items-center py-3 pl-2 pr-4 xl:pr-0 border-b border-transparent ${className}`}
+    className={`xl:border-none flex cursor-pointer items-center py-3 pl-2 pr-4 xl:pr-0 border-b border-transparent w-full ${className}`}
     onClick={onClick}
   >
     {children}

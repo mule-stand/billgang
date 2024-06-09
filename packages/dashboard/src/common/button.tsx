@@ -35,7 +35,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'text-sm',
           'disabled:opacity-50',
           variants[variant],
-          isSquare ? 'w-8 h-8 !p-0 flex-center rounded-sm' : 'w-fit h-9',
+          isSquare ? 'w-8 h-8 !p-0 flex-center rounded-lg' : 'w-fit h-9',
           className,
         ),
       )}
