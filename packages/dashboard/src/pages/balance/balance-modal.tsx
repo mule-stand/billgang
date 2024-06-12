@@ -1,5 +1,5 @@
 import * as Ariakit from '@ariakit/react'
-
+import { useAction, useAtom } from '@reatom/npm-react'
 import { z } from 'zod'
 
 import { Button } from '../../common/button.js'
@@ -7,65 +7,108 @@ import { IconWrapper } from '../../common/icon-wrapper.js'
 import { Input } from '../../common/input.js'
 import { Modal } from '../../common/modal.js'
 
+import { getGatewaysDetail } from '../../api/gateway.js'
 import {
-  ApplePayGooglePay,
-  CashApp,
-  Cryptocurrency,
-  DebitCreditCard,
+  // ApplePayGooglePay,
+  // CashApp,
+  // Cryptocurrency,
+  // DebitCreditCard,
   DocumentCloud,
   Dollar,
   Fire,
-  PayPal,
+  // PayPal,
   Plus,
   ShieldSearch,
 } from '../../assets/icons.js'
-import { ccn } from '../../utils/index.js'
+import { ccn, convertCfImageIdToUrl, formatPrice } from '../../utils/index.js'
 import { validateFormStore } from '../../utils/validateFormStore.js'
+import { type BalanceTopUpSettings, requestTopUpBalance } from './model.js'
 
-const payMethods = [
-  {
-    name: 'Cryptocurrency',
-    icon: <Cryptocurrency />,
-  },
-  {
-    name: 'Debit / Credit Card',
-    icon: <DebitCreditCard />,
-  },
-  {
-    name: 'Cash App',
-    icon: <CashApp />,
-  },
-  {
-    name: 'PayPal',
-    icon: <PayPal />,
-  },
-  {
-    name: 'Apple Pay / Google Pay',
-    icon: <ApplePayGooglePay />,
-  },
-]
+// const gateways = [
+//   {
+//     name: 'Cryptocurrency',
+//     icon: <Cryptocurrency />,
+//   },
+//   {
+//     name: 'Debit / Credit Card',
+//     icon: <DebitCreditCard />,
+//   },
+//   {
+//     name: 'Cash App',
+//     icon: <CashApp />,
+//   },
+//   {
+//     name: 'PayPal',
+//     icon: <PayPal />,
+//   },
+//   {
+//     name: 'Apple Pay / Google Pay',
+//     icon: <ApplePayGooglePay />,
+//   },
+// ]
 
 const balanceValidation = z.object({
   amount: z.coerce
     .number({ message: 'The balance field should be number.' })
     .min(1, { message: 'The balance field cannot be empty.' }),
-  payMethod: z.string().min(1, { message: 'Select pay method' }),
+  gateway: z.string().min(1, { message: 'Select pay method' }),
 })
+const BonusBlock = ({
+  enterAnother,
+  bonusPercent,
+  currency,
+}: { enterAnother: number; bonusPercent: number; currency: string }) => (
+  <div className="text-sm text-brandDefault py-2 px-3 inline-flex bg-surface0 rounded-xl mt-3 mb-4">
+    <Fire />
+    <div className="ml-2">
+      {enterAnother > 0 || Number.isNaN(enterAnother)
+        ? `Enter another ${formatPrice({
+            amount: enterAnother,
+            currency,
+          })} and receive an additional bonus of
+          ${bonusPercent}%`
+        : `You will receive an additional bonus of
+          ${bonusPercent}%`}
+    </div>
+  </div>
+)
 
-export const BalanceModal = () => {
+export const BalanceModal = (balanceSettings: BalanceTopUpSettings) => {
+  const [gatewaysDetail] = useAtom(getGatewaysDetail.dataAtom)
   const formStore = Ariakit.useFormStore({
-    defaultValues: { amount: '', payMethod: '' },
+    defaultValues: { amount: '', gateway: '' },
   })
+  const topUp = useAction(requestTopUpBalance)
 
   const dialogStore = Ariakit.useDialogStore({ defaultOpen: false })
-  formStore.useSubmit(() => {
+  formStore.useSubmit(async () => {
+    const order = await topUp({ price: { amount, currency }, gateway })
+    console.log({ order })
     dialogStore.hide()
   })
-  const payMethod = formStore.useValue(formStore.names.payMethod)
+  const gateway = formStore.useValue(formStore.names.gateway)
+  const amount = formStore.useValue(formStore.names.amount)
 
   formStore.useValidate((state) =>
     validateFormStore(state, balanceValidation, formStore),
   )
+  if (!balanceSettings || !balanceSettings?.isEnabled) {
+    return null
+  }
+  const {
+    topUpSettings: {
+      currency,
+      topUpBonusEnabled,
+      bonusPercent,
+      minimumTopUpForBonus,
+    },
+  } = balanceSettings
+  const parsedAmount = Number(amount)
+  const enterAnother =
+    topUpBonusEnabled && !Number.isNaN(parsedAmount)
+      ? minimumTopUpForBonus - Number(parsedAmount)
+      : minimumTopUpForBonus
+
   return (
     <>
       <Button
@@ -85,49 +128,49 @@ export const BalanceModal = () => {
           </Ariakit.FormLabel>
           <Ariakit.FormInput
             name={formStore.names.amount}
-            render={
-              <Input className="mb-3" placeholder="0" icon={<Dollar />} />
-            }
+            render={<Input placeholder="0" icon={<Dollar />} />}
           />
           <Ariakit.FormError
-            className="text-signalDanger mb-4"
+            className="text-signalDanger"
             name={formStore.names.amount}
           />
-
-          <div className="text-sm text-brandDefault py-2 px-3 inline-flex bg-surface0 rounded-xl mb-4">
-            <Fire />
-            <div className="ml-2">
-              Enter another $13 and receive an additional bonus of 25%
+          {topUpBonusEnabled && enterAnother !== undefined && (
+            <BonusBlock {...{ enterAnother, bonusPercent, currency }} />
+          )}
+          {gatewaysDetail && (
+            <div className="pt-6 mt-6 border-borderDefault border-t w-full grid gap-3 grid-cols-2">
+              {gatewaysDetail.map((e, index) => (
+                <button
+                  type="button"
+                  key={e.name}
+                  className={ccn(
+                    'p-4 rounded-2xl border flex flex-col justify-start',
+                    gateway === e.name
+                      ? 'border-brandDefault'
+                      : 'border-borderDefault',
+                    gatewaysDetail.length - 1 === index && 'col-span-2',
+                  )}
+                  onClick={() =>
+                    formStore.setValue(formStore.names.gateway, e.name)
+                  }
+                >
+                  <img
+                    alt={e.displayName}
+                    src={convertCfImageIdToUrl(e.logoCfImageId)}
+                    className="mb-4 w-6 h-6"
+                  />
+                  <div>{e.displayName}</div>
+                </button>
+              ))}
             </div>
-          </div>
-          <div className="mb-10 pt-6 border-borderDefault border-t w-full grid gap-3 grid-cols-2">
-            {payMethods.map((e, index) => (
-              <button
-                type="button"
-                key={e.name}
-                className={ccn(
-                  'p-4 rounded-2xl border flex flex-col justify-start',
-                  payMethod === e.name
-                    ? 'border-brandDefault'
-                    : 'border-borderDefault',
-                  payMethods.length - 1 === index && 'col-span-2',
-                )}
-                onClick={() =>
-                  formStore.setValue(formStore.names.payMethod, e.name)
-                }
-              >
-                <div className="mb-4">{e.icon}</div>
-                <div>{e.name}</div>
-              </button>
-            ))}
-          </div>
+          )}
           <Ariakit.FormError
             className="text-signalDanger mb-4"
-            name={formStore.names.payMethod}
+            name={formStore.names.gateway}
           />
           <Ariakit.FormSubmit
             render={
-              <Button className="w-full mb-4 h-11 py-3">
+              <Button className="w-full mt-10 mb-4 h-11 py-3">
                 Continue to Checkout
               </Button>
             }

@@ -12,6 +12,7 @@ import {
   type Transaction,
   TransactionStatus,
   getBalance,
+  getBalanceSettings,
   getTransactions,
   pageNumberAtom,
 } from './model.js'
@@ -90,16 +91,17 @@ const renderTransaction = ({ id, price, status }: Transaction) => {
 export const Balance = () => {
   const [transactions] = useAtom(getTransactions.dataAtom)
   const [balance] = useAtom(getBalance.dataAtom)
-
+  const [balanceSettings] = useAtom(getBalanceSettings.dataAtom)
   const [currentPage, setCurrentPage] = useAtom(pageNumberAtom)
-  const [pending] = useAtom((ctx) => ctx.spy(getTransactions.pendingAtom) > 0)
-  const [balancePending] = useAtom((ctx) => ctx.spy(getBalance.pendingAtom) > 0)
+  const [pending] = useAtom(
+    (ctx) =>
+      ctx.spy(getTransactions.pendingAtom) +
+        ctx.spy(getBalance.pendingAtom) +
+        ctx.spy(getBalanceSettings.pendingAtom) >
+      0,
+  )
 
   const renderContent = () => {
-    if (pending) {
-      return <LoadingSpinner />
-    }
-
     if (transactions?.list?.length) {
       const groupedTransactions = groupTransactionsByDate(transactions.list)
       return (
@@ -128,22 +130,30 @@ export const Balance = () => {
       />
     )
   }
+  if (pending) {
+    return <LoadingSpinner />
+  }
+
   return (
     <>
       <div className="p-6 border rounded-2xl border-borderDefault mb-4">
-        <div className="text-sm text-brandDefault py-2 px-3 flex bg-surface0 rounded-xl mb-4">
-          <Fire />
-          <div className="ml-2">
-            Top up your store balance below and get <b>25%</b> back.
+        {balanceSettings?.topUpSettings.cashbackEnabled && (
+          <div className="text-sm text-brandDefault py-2 px-3 flex bg-surface0 rounded-xl mb-4">
+            <Fire />
+            <div className="ml-2">
+              Top up your store balance below and get
+              <b> {balanceSettings.topUpSettings.cashbackPercent}%</b> back.
+            </div>
           </div>
-        </div>
+        )}
         <div className="text-textSecondary">Your balance</div>
         <div className="flex items-baseline flex-col md:flex-row">
           <div className="text-xxl font-bold mr-auto leading-10 mb-4 md:mb-0">
-            {!balancePending && balance && formatPrice(balance)}
+            {balance && formatPrice(balance)}
           </div>
-
-          <BalanceModal />
+          {balanceSettings?.isEnabled && (
+            <BalanceModal {...{ ...balanceSettings }} />
+          )}
           <div className="flex w-full md:w-auto">
             <Button
               variant="secondary"
