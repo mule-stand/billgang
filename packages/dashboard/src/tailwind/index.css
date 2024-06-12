@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap");
 @config "tailwind.config.ts";
 
 @tailwind base;
@@ -6,59 +6,58 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --billgang-color-signal-danger: #c12a2a;
-        --billgang-color-brand-default: #ff3f19;
-        --billgang-color-brand-light: #ffeae5;
-        --billgang-color-brand-lighter: rgba(255, 64, 26, 0.1);
-        --billgang-color-surface-0: #f8f8f8;
-        --billgang-color-surface-100: #ffffff;
-        --billgang-color-surface-200: #c2c2c2;
-        --billgang-color-text-brandDefault: #252525;
-        --billgang-color-text-secondary: #757575;
-        --billgang-color-border-default: #f0f0f0;
-        --billgang-color-border-hover: #e6e6e6;
-        --billgang-color-shadow-0: #dfdfdf;
-        --billgang-color-success-background: #E5FADD;
-        --billgang-color-success-text: #338B13;
-        --billgang-color-warning-background: #FAF8E6;
-        --billgang-color-warning-text: #C1972A;
-        --billgang-color-error-background: #FAE6E6;
-        --billgang-color-dialog-backdrop: rgba(37, 37, 37, 0.25);
-        --billgang-color-field-background-default: var(
-                --billgang-color-surface-200
-        );
-        --billgang-color-field-background-hover: var(--billgang-color-surface-100);
-        --billgang-color-field-background-focus: var(--billgang-color-surface-100);
-        --billgang-color-field-border-default: var(--billgang-color-surface-200);
-        --billgang-color-field-border-hover: var(--billgang-color-surface-200);
-        --billgang-color-field-border-focus: var(--billgang-color-brand-default);
+  :root {
+    --billgang-color-signal-danger: #c12a2a;
+    --billgang-color-brand-default: #ff3f19;
+    --billgang-color-brand-light: #ffeae5;
+    --billgang-color-brand-lighter: rgba(255, 64, 26, 0.1);
+    --billgang-color-surface-0: #f8f8f8;
+    --billgang-color-surface-100: #ffffff;
+    --billgang-color-surface-200: #c2c2c2;
+    --billgang-color-text-brandDefault: #252525;
+    --billgang-color-text-secondary: #757575;
+    --billgang-color-border-default: #f0f0f0;
+    --billgang-color-border-hover: #e6e6e6;
+    --billgang-color-shadow-0: #dfdfdf;
+    --billgang-color-success-background: #e5fadd;
+    --billgang-color-success-text: #338b13;
+    --billgang-color-warning-background: #faf8e6;
+    --billgang-color-warning-text: #c1972a;
+    --billgang-color-error-background: #fae6e6;
+    --billgang-color-dialog-backdrop: rgba(37, 37, 37, 0.25);
+    --billgang-color-field-background-default: var(
+      --billgang-color-surface-200
+    );
+    --billgang-color-field-background-hover: var(--billgang-color-surface-100);
+    --billgang-color-field-background-focus: var(--billgang-color-surface-100);
+    --billgang-color-field-border-default: var(--billgang-color-surface-200);
+    --billgang-color-field-border-hover: var(--billgang-color-surface-200);
+    --billgang-color-field-border-focus: var(--billgang-color-brand-default);
 
-        --billgang-shadow-0: 0 1px 0 var(--billgang-color-shadow-0);
-        --billgang-shadow-field: 0 0 0 3px var(--billgang-color-brand-light);
-        --billgang-shadow-dialog: 0 10px 20px rgba(0, 0, 0, 0.05);
-    }
+    --billgang-shadow-0: 0 1px 0 var(--billgang-color-shadow-0);
+    --billgang-shadow-field: 0 0 0 3px var(--billgang-color-brand-light);
+    --billgang-shadow-dialog: 0 10px 20px rgba(0, 0, 0, 0.05);
+  }
 }
 
 @layer components {
-    .flex-center {
-        @apply flex items-center justify-center;
-    }
-    .icon-wrapper {
-        @apply flex-center rounded-xl bg-surface0;
-    }
-
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .icon-wrapper {
+    @apply flex-center rounded-xl bg-surface0 shrink-0;
+  }
 }
 
 body {
-    font-family: 'Archivo', sans-serif;
+  font-family: "Archivo", sans-serif;
 }
 
 html,
 body,
 #root {
-    height: 100%;
+  height: 100%;
 }
 .grecaptcha-badge {
-    visibility: hidden;
+  visibility: hidden;
 }

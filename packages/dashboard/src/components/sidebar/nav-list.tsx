@@ -1,14 +1,15 @@
 import { reatomComponent, useAction, useAtom } from '@reatom/npm-react'
 
+import { twMerge } from 'tailwind-merge'
 import { routeAtom } from '../../app/index.js'
 import { Routes } from '../../app/routes.js'
 import {
-  Dollar,
   Heart,
   Home,
   Logout,
   Medal,
   Question,
+  SealDollar,
   Wallet,
 } from '../../assets/icons.js'
 import { logoutCustomer } from '../../auth/model.js'
@@ -17,7 +18,7 @@ import { IconWrapper } from '../../common/icon-wrapper.js'
 const sidebarItems: [Routes, React.FunctionComponent][] = [
   [Routes.Home, Home],
   [Routes.Favorites, Heart],
-  [Routes.Orders, Dollar],
+  [Routes.Orders, SealDollar],
   [Routes.Rewards, Medal],
   [Routes.Balance, Wallet],
   [Routes.Tickets, Question],
@@ -32,7 +33,10 @@ interface NavItemProps {
 const NavItem = ({ children, className = '', onClick }: NavItemProps) => (
   <button
     type="button"
-    className={`xl:border-none flex cursor-pointer items-center py-3 pl-2 pr-4 xl:pr-0 border-b border-transparent w-full ${className}`}
+    className={twMerge(
+      'xl:border-none flex cursor-pointer items-center py-3 pl-2 pr-4 xl:pr-0 border-b border-transparent w-full',
+      className,
+    )}
     onClick={onClick}
   >
     {children}
@@ -53,7 +57,7 @@ const NavList = reatomComponent(({ ctx }) => {
             onClick={() => routeAtom(ctx, text)}
             className={`flex-1 ${
               isActive
-                ? 'xl:rounded-xl xl:bg-surface0 text-textPrimary !border-textPrimary'
+                ? 'xl:rounded-xl xl:bg-surface0 text-textPrimary border-textPrimary'
                 : 'text-textSecondary'
             }`}
           >

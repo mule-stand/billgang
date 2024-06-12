@@ -6,14 +6,15 @@ import { LoadingSpinner } from '../../common/loading-spinner.js'
 import { NoItemsBlock } from '../../common/no-items-block.js'
 import { PageTitle } from '../../common/page-title.js'
 import { PaginationWithRange } from '../../common/pagination.js'
+import { formatPrice } from '../../utils/index.js'
+import { BalanceModal } from './balance-modal.js'
 import {
   type Transaction,
   TransactionStatus,
+  getBalance,
   getTransactions,
   pageNumberAtom,
 } from './model.js'
-
-import { formatPrice } from '../../utils/index.js'
 
 import { Fire, Minus, Plus, Question, ThreeDots } from '../../assets/icons.js'
 
@@ -88,8 +89,11 @@ const renderTransaction = ({ id, price, status }: Transaction) => {
 
 export const Balance = () => {
   const [transactions] = useAtom(getTransactions.dataAtom)
+  const [balance] = useAtom(getBalance.dataAtom)
+
   const [currentPage, setCurrentPage] = useAtom(pageNumberAtom)
   const [pending] = useAtom((ctx) => ctx.spy(getTransactions.pendingAtom) > 0)
+  const [balancePending] = useAtom((ctx) => ctx.spy(getBalance.pendingAtom) > 0)
 
   const renderContent = () => {
     if (pending) {
@@ -136,16 +140,14 @@ export const Balance = () => {
         <div className="text-textSecondary">Your balance</div>
         <div className="flex items-baseline flex-col md:flex-row">
           <div className="text-xxl font-bold mr-auto leading-10 mb-4 md:mb-0">
-            $0.00
+            {!balancePending && balance && formatPrice(balance)}
           </div>
-          <Button className="mr-4 flex-center mb-2 md:mb-0 w-full md:w-auto">
-            <IconWrapper color="surface100" Icon={Plus} />
-            <span className="ml-1">Add balance</span>
-          </Button>
+
+          <BalanceModal />
           <div className="flex w-full md:w-auto">
             <Button
               variant="secondary"
-              className="mr-2 md:mr-4 flex-center w-full md:w-auto"
+              className="mr-2 md:mr-4 flex-center w-full md:w-auto shrink"
             >
               <IconWrapper Icon={Question} />
               <span className="ml-1">Contact support</span>

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+
 type ClassName = string | undefined | false | null
 
 export const PriceSchema = z.object({
@@ -61,7 +62,7 @@ export const extractDateAndTime = (isoTime: string) => {
 }
 
 export const parseResult = <T extends z.ZodTypeAny>(
-  data: unknown,
+  data: z.infer<T>,
   schema: T,
 ) => {
   try {
@@ -70,7 +71,7 @@ export const parseResult = <T extends z.ZodTypeAny>(
     if (err instanceof z.ZodError) {
       console.error(err, err.issues)
     }
-    return null
+    return data
   }
 }
 

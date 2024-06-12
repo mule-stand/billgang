@@ -1,5 +1,4 @@
 import { useAtom } from '@reatom/npm-react'
-import { z } from 'zod'
 import { Bag, Confetti } from '../../assets/icons.js'
 import { Button } from '../../common/button.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'

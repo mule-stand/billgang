@@ -14,19 +14,24 @@ import {
   requestOtp,
 } from './model.js'
 
+import { validateFormStore } from '../utils/validateFormStore.js'
 import { AuthOTPInput } from './otp-input.js'
-const emailValidation = z
-  .string()
-  .trim()
-  .min(1, { message: 'The email field cannot be empty.' })
-  .email({
-    message: 'Please enter a valid email.',
-  })
-const otpValidation = z.string().regex(/^[0-9]{6}$/, {
-  message:
-    'Invalid verification code. The code should be a six-digit number. Please try again',
-})
 
+const emailValidation = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, { message: 'The email field cannot be empty.' })
+    .email({
+      message: 'Please enter a valid email.',
+    }),
+})
+const otpValidation = z.object({
+  otp: z.string().regex(/^[0-9]{6}$/, {
+    message:
+      'Invalid verification code. The code should be a six-digit number. Please try again',
+  }),
+})
 interface FormHeaderProps {
   title: string
   subtitle: string
@@ -46,6 +51,7 @@ interface FormErrorProps {
 const FormError: React.FC<FormErrorProps> = ({ name }) => (
   <Ariakit.FormError className="text-signalDanger mb-10" name={name} />
 )
+
 export const AuthRequestOtp = () => {
   const submit = useAction(requestOtp)
   const [{ email }, setOtpRequest] = useAtom(otpRequestAtom)
@@ -58,14 +64,9 @@ export const AuthRequestOtp = () => {
     },
   })
 
-  formStore.useValidate((state) => {
-    const valid = emailValidation.safeParse(state.values.email)
-    const message = valid?.error?.issues?.[0]?.message
-
-    if (!valid.success && message) {
-      formStore.setError(formStore.names.email, message)
-    }
-  })
+  formStore.useValidate((state) =>
+    validateFormStore(state, emailValidation, formStore),
+  )
 
   formStore.useSubmit(async (state) => {
     const recaptcha = await executeRecaptcha()
@@ -80,7 +81,6 @@ export const AuthRequestOtp = () => {
     }
     setOtpRequest({ requested: true, email: state.values.email })
   })
-
   return (
     <Ariakit.Form store={formStore}>
       <FormHeader
@@ -113,14 +113,9 @@ export const AuthLogin = () => {
 
   const formStore = Ariakit.useFormStore({ defaultValues: { otp: '' } })
 
-  formStore.useValidate((state) => {
-    const valid = otpValidation.safeParse(state.values.otp)
-    const message = valid?.error?.issues?.[0]?.message
-
-    if (!valid.success && message) {
-      formStore.setError(formStore.names.otp, message)
-    }
-  })
+  formStore.useValidate((state) =>
+    validateFormStore(state, otpValidation, formStore),
+  )
 
   formStore.useSubmit(async (state) => {
     const recaptcha = await executeRecaptcha()
@@ -161,7 +156,7 @@ export const AuthLogin = () => {
 
       <Ariakit.FormControl
         name={formStore.names.otp}
-        render={(props) => {
+        render={() => {
           return (
             <AuthOTPInput
               onChange={(value) =>

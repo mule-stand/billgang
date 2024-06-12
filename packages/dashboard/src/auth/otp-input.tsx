@@ -18,8 +18,8 @@ export const AuthOTPInput = forwardRef<HTMLInputElement, AuthOTPInputType>(
         containerClassName="group flex items-center bg-surface0 mt-1 rounded-xl"
         render={({ slots }) => (
           <div className="flex w-full">
-            {slots.map((slot, idx) => (
-              <Slot key={idx} {...slot} />
+            {slots.map((slot) => (
+              <Slot key={crypto.randomUUID()} {...slot} />
             ))}
           </div>
         )}

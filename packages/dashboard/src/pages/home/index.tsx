@@ -6,10 +6,10 @@ import {
   Calendar,
   Crown,
   D4RK,
-  Dollar,
   Eye,
   Heart,
   Medal,
+  SealDollar,
   Star,
   TopArrow,
 } from '../../assets/icons.js'
@@ -73,7 +73,7 @@ export const Home = () => {
           value={formatTimestamp(data.createdAt)}
         />
         <StatItem
-          Icon={Dollar}
+          Icon={SealDollar}
           title="Total spent"
           value={formatPrice({ amount: data.totalSpent })}
         />

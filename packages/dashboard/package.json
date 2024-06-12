@@ -1,9 +1,7 @@
 {
   "name": "@billgang/dashboard",
   "type": "module",
-  "files": [
-    "dist/"
-  ],
+  "files": ["dist/"],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -43,7 +41,9 @@
   "dependencies": {
     "@ariakit/react": "^0.4.7",
     "@reatom/persist-web-storage": "^3.4.1",
+    "@types/lodash.get": "^4.4.9",
     "input-otp": "^1.2.4",
+    "lodash.get": "^4.4.2",
     "react-google-recaptcha": "^3.1.0",
     "zod": "^3.23.8"
   }
