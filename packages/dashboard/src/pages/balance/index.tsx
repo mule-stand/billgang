@@ -137,7 +137,7 @@ export const Balance = () => {
   return (
     <>
       <div className="p-6 border rounded-2xl border-borderDefault mb-4">
-        {balanceSettings?.topUpSettings.cashbackEnabled && (
+        {/* {balanceSettings?.topUpSettings.cashbackEnabled && (
           <div className="text-sm text-brandDefault py-2 px-3 flex bg-surface0 rounded-xl mb-4">
             <Fire />
             <div className="ml-2">
@@ -145,7 +145,7 @@ export const Balance = () => {
               <b> {balanceSettings.topUpSettings.cashbackPercent}%</b> back.
             </div>
           </div>
-        )}
+        )} */}
         <div className="text-textSecondary">Your balance</div>
         <div className="flex items-baseline flex-col md:flex-row">
           <div className="text-xxl font-bold mr-auto leading-10 mb-4 md:mb-0">
