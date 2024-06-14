@@ -6,13 +6,7 @@ import { Button } from '../common/button.js'
 import { Input } from '../common/input.js'
 import { LoadingSpinner } from '../common/loading-spinner.js'
 import { useReCaptcha } from '../utils/recapcha.js'
-import {
-  LoginCustomerErrorCode,
-  RequestOtpErrorCode,
-  loginCustomer,
-  otpRequestAtom,
-  requestOtp,
-} from './model.js'
+import { loginCustomer, otpRequestAtom, requestOtp } from './model.js'
 
 import { validateFormStore } from '../utils/validateFormStore.js'
 import { AuthOTPInput } from './otp-input.js'
@@ -71,15 +65,7 @@ export const AuthRequestOtp = () => {
   formStore.useSubmit(async (state) => {
     const recaptcha = await executeRecaptcha()
     if (!recaptcha) return
-    const result = await submit({ email: state.values.email, recaptcha })
-    const errorCode = result.errorCode
-    if (result.errorCode !== null) {
-      if (errorCode === RequestOtpErrorCode.UNHANDLED) {
-        formStore.setError(formStore.names.email, 'Unhandled Error.')
-        return
-      }
-    }
-    setOtpRequest({ requested: true, email: state.values.email })
+    await submit({ email: state.values.email, recaptcha })
   })
   return (
     <Ariakit.Form store={formStore}>
@@ -120,23 +106,10 @@ export const AuthLogin = () => {
   formStore.useSubmit(async (state) => {
     const recaptcha = await executeRecaptcha()
     if (recaptcha === null) return
-    const result = await submit({
+    await submit({
       otp: state.values.otp,
       recaptcha,
     })
-    const errorCode = result.errorCode
-
-    if (result.errorCode !== null) {
-      if (errorCode === LoginCustomerErrorCode.INVALID_OTP) {
-        formStore.setError(formStore.names.otp, 'Invalid verification code.')
-        return
-      }
-      if (errorCode === LoginCustomerErrorCode.UNHANDLED) {
-        formStore.setError(formStore.names.otp, 'Unhandled Error')
-        return
-      }
-    }
-    setOtpRequest({ requested: false })
   })
   const back = () => setOtpRequest({ requested: false })
   const value = formStore.useValue(formStore.names.otp)

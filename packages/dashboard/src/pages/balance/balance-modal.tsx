@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { Button } from '../../common/button.js'
 import { IconWrapper } from '../../common/icon-wrapper.js'
 import { Input } from '../../common/input.js'
+import { LoadingSpinner } from '../../common/loading-spinner.js'
 import { Modal } from '../../common/modal.js'
 
 import { getGatewaysDetail } from '../../api/gateway.js'
@@ -75,6 +76,7 @@ const BonusBlock = ({
 
 export const BalanceModal = (balanceSettings: BalanceTopUpSettings) => {
   const [gatewaysDetail] = useAtom(getGatewaysDetail.dataAtom)
+  const [pending] = useAtom(requestTopUpBalance.pendingAtom)
   const formStore = Ariakit.useFormStore({
     defaultValues: { amount: '', gateway: '' },
   })
@@ -175,7 +177,7 @@ export const BalanceModal = (balanceSettings: BalanceTopUpSettings) => {
               </Button>
             }
           />
-
+          {pending ? <LoadingSpinner /> : null}
           <div className="p-3 bg-surface0 flex rounded-xl items-center mb-4">
             <div className="h-[20px] w-[20px] mr-[10px] flex-center">
               <DocumentCloud />

@@ -1,4 +1,11 @@
+import { toast } from 'sonner'
 import { z } from 'zod'
+
+export const showError = (message: string) =>
+  toast.error(message, {
+    duration: Number.POSITIVE_INFINITY,
+    closeButton: true,
+  })
 
 type ClassName = string | undefined | false | null
 

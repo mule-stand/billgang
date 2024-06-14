@@ -1,4 +1,5 @@
 import { createCtx } from '@reatom/framework'
+import { Toaster } from 'sonner'
 
 import { reatomContext } from '@reatom/npm-react'
 import App from './app/index.js'
@@ -10,6 +11,7 @@ export const Dashboard = () => {
     <reatomContext.Provider value={ctx}>
       <ReCaptchaProvider>
         <App />
+        <Toaster />
       </ReCaptchaProvider>
     </reatomContext.Provider>
   )

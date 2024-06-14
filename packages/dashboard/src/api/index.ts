@@ -1,6 +1,6 @@
 import { logoutCustomer, tokenAtom } from '../auth/model.js'
 import { ctx } from '../index.js'
-import type { Price } from '../utils/index.js'
+import { type Price, showError } from '../utils/index.js'
 // rewards user
 // export const shopDomen = 'dfbd.billgang.store'
 // const shopId = '38332d9f-3bb6-4b3f-ac68-90151b968958'
@@ -16,13 +16,16 @@ import type { Price } from '../utils/index.js'
 // oreshaver
 export const shopDomen = 'oreshaver.billgang.store'
 const shopId = '15124f8d-2c8c-4dda-a04c-31c16816f9b6'
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1N…I0M30.QhPpo049I84OOV_xnpM0QYVrHJKRUqtcf1YJr3EKjzQ
 //const customerToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1NDY5MDQ0NyIsImN1c3RvbWVyIjoiVHJ1ZSIsImV4cCI6MTcyMzA0Mjg0MH0.ehBdy8JxhriwhTaTPuyxKmOLgGMW67NdVBEtSc9ssRE'
 const UNAUTHORIZED_STATUS_CODE = 401
-type FetchOptions = RequestInit & {
+const NOT_FOUND_STATUS_CODE = 404
+type FetchOptions = Omit<RequestInit, 'body'> & {
   params?: { [key: string]: string | string[] }
   returnHeaders?: boolean
   apiUrl?: string
   useToken?: boolean
+  body?: object
 }
 type PageType = {
   PageNumber: number
@@ -38,22 +41,25 @@ const apiOrdersUrl = 'https://sl-api.billgang.com'
 export const apiUrlWithShopId = `${apiCustomersUrl}/${shopId}`
 export const apiUrlWithShopDomen = `${apiCustomersUrl}/${shopDomen}`
 
-async function request(baseURL: string, options: FetchOptions = {}) {
+export async function request(baseURL: string, options: FetchOptions = {}) {
   const {
     params,
     returnHeaders,
     apiUrl = apiUrlWithShopId,
     useToken = true,
+    body,
     ...fetchOptions
   } = options
+
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   }
+
   if (useToken) {
     const customerToken = ctx.get(tokenAtom)
-
     headers.Authorization = `Bearer ${customerToken}`
   }
+
   const url = new URL(`${apiUrl}/${baseURL}`)
 
   if (params) {
@@ -68,29 +74,61 @@ async function request(baseURL: string, options: FetchOptions = {}) {
     }
   }
 
+  let finalBody: BodyInit | null = null
+  if (body) {
+    finalBody = JSON.stringify(body)
+  }
+
+  const finalFetchOptions: RequestInit = {
+    ...fetchOptions,
+    headers,
+    body: finalBody,
+  }
+
   try {
-    const response = await fetch(url.toString(), {
-      ...fetchOptions,
-      headers,
-    })
+    const response = await fetch(url.toString(), finalFetchOptions)
+
     if (!response.ok) {
       throw response
     }
+
     const data = await response.json()
+
     if (returnHeaders) {
       return { headers: response.headers, data }
     }
+
     return data
   } catch (error) {
-    if (
-      error instanceof Response &&
-      error.status === UNAUTHORIZED_STATUS_CODE
-    ) {
-      console.error('Unauthorized error, token might be invalid:', error)
-      logoutCustomer(ctx)
+    if (error instanceof Response) {
+      if (error.status === UNAUTHORIZED_STATUS_CODE) {
+        showError('Unauthorized error, token might be invalid')
+        logoutCustomer(ctx)
+      } else if (error.status === NOT_FOUND_STATUS_CODE) {
+        showError('The server error, method not found')
+      }
+      if (error.json) {
+        const errorData = await error.json()
+        if (errorData) {
+          const { errors, message } = errorData
+          let errorMessage = ''
+          if (errors?.length) {
+            errorMessage = errors?.join(' ')
+          } else if (message) {
+            errorMessage = message
+          }
+
+          if (errorMessage) {
+            showError(errorMessage)
+          }
+        }
+
+        console.log({ errorData })
+      }
     } else {
-      console.error('Fetch error:', error)
+      showError('Fetch error')
     }
+    console.error(error)
     throw error
   }
 }
@@ -111,7 +149,7 @@ export const postBalanceTopUp = (body: Payment) =>
   request(`v1/balance/top-up/${shopDomen}`, {
     apiUrl: apiOrdersUrl,
     method: 'POST',
-    body: JSON.stringify(body),
+    body,
     useToken: false,
   })
 export const fetchGatewaysDetail = (gateways: string[]) =>

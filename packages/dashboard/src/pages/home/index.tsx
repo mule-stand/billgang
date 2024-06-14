@@ -36,8 +36,9 @@ const StatContainer = ({ children }: { children: React.ReactNode }) => (
 )
 export const Home = () => {
   const [data] = useAtom(getHome.dataAtom)
-
-  if (!data) return <LoadingSpinner />
+  const [pending] = useAtom((ctx) => ctx.spy(getHome.pendingAtom))
+  if (pending) return <LoadingSpinner />
+  if (!data) return null
 
   return (
     <div className="grid w-full grid-rows-[repeat(auto,min-content)] gap-4 grid-cols-2 lg:grid-cols-4 lg:pb-6">

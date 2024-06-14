@@ -1,6 +1,6 @@
 import { action, atom, reatomAsync } from '@reatom/framework'
 import { withLocalStorage } from '@reatom/persist-web-storage'
-import { apiUrlWithShopDomen } from '../api/index.js'
+import { apiUrlWithShopDomen, request } from '../api/index.js'
 
 export const tokenAtom = atom('').pipe(withLocalStorage('token'))
 type OtpRequest = {
@@ -21,52 +21,20 @@ type RequestOtpParams = {
   recaptcha: string
 }
 
-type AuthFetchParams = {
-  url: string
-  body: object
-}
-const authFetch = async ({ url, body }: AuthFetchParams) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  })
-
-  if (!response.ok) {
-    return {
-      success: false,
-      result: await response.json(),
-    }
-  }
-
-  return {
-    success: true,
-    result: await response.json(),
-  }
-}
-
 export const requestOtp = reatomAsync(
-  async (_ctx, { email, recaptcha }: RequestOtpParams) => {
-    const url = `${apiUrlWithShopDomen}/auth/otp/request`
-
-    const { success } = await authFetch({
-      url,
+  async (ctx, { email, recaptcha }: RequestOtpParams) => {
+    const url = 'auth/otp/request'
+    const result = await request(url, {
       body: {
         email,
         recaptcha,
       },
+      apiUrl: apiUrlWithShopDomen,
+      method: 'POST',
+      useToken: false,
     })
-
-    if (!success) {
-      return {
-        errorCode: RequestOtpErrorCode.UNHANDLED,
-      }
-    }
-
-    return {
-      errorCode: null,
+    if (result) {
+      otpRequestAtom(ctx, { requested: true, email })
     }
   },
 )
@@ -74,41 +42,19 @@ export const requestOtp = reatomAsync(
 /*
  * Auth
  * */
-export enum LoginCustomerErrorCode {
-  UNHANDLED = 0,
-  INVALID_OTP = 1,
-}
+
 export const loginCustomer = reatomAsync(async (ctx, { otp, recaptcha }) => {
-  const url = `${apiUrlWithShopDomen}/auth/otp/login`
+  const url = 'auth/otp/login'
   const email = ctx.get(otpRequestAtom).email
-
-  const { success, result } = await authFetch({
-    url,
-    body: {
-      email,
-      otp,
-      recaptcha,
-    },
+  const result = await request(url, {
+    method: 'POST',
+    body: { email, otp, recaptcha },
+    apiUrl: apiUrlWithShopDomen,
+    useToken: false,
   })
-
-  if (!success) {
-    const errors = result.errors
-    if (errors !== null) {
-      if (errors.includes('Invalid OTP code')) {
-        return {
-          errorCode: LoginCustomerErrorCode.INVALID_OTP,
-        }
-      }
-    }
-
-    return {
-      errorCode: LoginCustomerErrorCode.UNHANDLED,
-    }
-  }
-
-  tokenAtom(ctx, result.data)
-  return {
-    errorCode: null,
+  if (result.data) {
+    tokenAtom(ctx, result.data)
+    otpRequestAtom(ctx, { requested: false })
   }
 })
 

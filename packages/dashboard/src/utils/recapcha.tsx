@@ -10,9 +10,9 @@ import ReCAPTCHA from 'react-google-recaptcha'
 export const SITE_KEY = '6LdQiIIpAAAAAAkhvhS9zuo5WNS5mAzZrALD9cCa'
 
 interface ReCaptchaInstance {
-  executeAsync?: () => Promise<string | null>
-  reset?: () => void
-  getValue?: () => string | null
+  executeAsync: () => Promise<string | null>
+  reset: () => void
+  getValue: () => string | null
 }
 
 interface ReCaptchaContextType {
@@ -31,13 +31,10 @@ export const ReCaptchaProvider: React.FC<{
 
   const executeRecaptcha = async () => {
     try {
-      if (recaptchaRef?.current?.reset) {
-        recaptchaRef.current.reset()
-      }
-      if (recaptchaRef?.current?.executeAsync) {
-        const result = await recaptchaRef.current.executeAsync()
-        return result ?? null
-      }
+      initObserver() // prevent from infinite loading by closing captcha
+      const result = await recaptchaRef?.current?.executeAsync()
+      await recaptchaRef?.current?.reset()
+      return result ?? null
     } catch (e) {
       console.error(e)
     }
@@ -52,7 +49,7 @@ export const ReCaptchaProvider: React.FC<{
       }}
     >
       {children}
-      <ReCAPTCHA ref={recaptchaRef} sitekey={SITE_KEY} size="invisible" />
+      <ReCAPTCHA sitekey={SITE_KEY} size="invisible" ref={recaptchaRef} />
     </ReCaptchaContext.Provider>
   )
 }
@@ -63,4 +60,34 @@ export const useReCaptcha = () => {
     throw new Error('useReCaptcha must be used within a ReCaptchaProvider')
   }
   return context
+}
+
+// Function that initializes a MutationObserver for the captcha
+export const initObserver = () => {
+  // Find the captcha window by first getting a list of iFrames.
+  // After that we find the correct iFrame based on the src attribute
+  // The actualy DIV that hides it, is a grandparent. So we get the
+  // parentNode prop 2 times.
+  const recaptchaWindow = [...document.getElementsByTagName('iframe')]?.find(
+    (x) => x.src.includes('google.com/recaptcha/api2/bframe'),
+  )?.parentNode?.parentNode as HTMLDivElement
+  // Make sure it is defined (it was found in the doc) before we add the observer
+  if (recaptchaWindow) {
+    new MutationObserver(() => {
+      // ReCaptcha changes these 3 props when going invisible.
+      // To solve this, we put an observer on the attributes and
+      // check if one of these 3 properties changed from their
+      // initial value.
+      if (
+        recaptchaWindow.style.visibility !== 'visible' ||
+        recaptchaWindow.style.opacity !== '1'
+      ) {
+        // If changed, put back on default values.
+        recaptchaWindow.style.opacity = '1'
+        recaptchaWindow.style.visibility = 'visible'
+      }
+    }).observe(recaptchaWindow, {
+      attributeFilter: ['style'],
+    })
+  }
 }
