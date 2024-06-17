@@ -1,6 +1,6 @@
 export enum Routes {
   Home = 'Home',
-  Favorites = 'Favorites',
+  // Favorites = 'Favorites',
   Orders = 'Orders',
   Rewards = 'Rewards',
   Balance = 'Balance',

@@ -17,7 +17,7 @@ import { IconWrapper } from '../../common/icon-wrapper.js'
 
 const sidebarItems: [Routes, React.FunctionComponent][] = [
   [Routes.Home, Home],
-  [Routes.Favorites, Heart],
+  // [Routes.Favorites, Heart],
   [Routes.Orders, SealDollar],
   [Routes.Rewards, Medal],
   [Routes.Balance, Wallet],
@@ -72,7 +72,7 @@ const NavList = reatomComponent(({ ctx }) => {
         )
       })}
       <NavItem
-        className="text-signalDanger lg:mt-[6px] text-nowrap"
+        className="text-signalDanger xl:mt-1 text-nowrap"
         onClick={handleLogout}
       >
         <div className="mr-2">

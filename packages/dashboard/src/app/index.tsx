@@ -15,7 +15,7 @@ const Template = () => <div>Template</div>
 export const routeAtom = atom<Routes>(Routes.Home)
 const RouteToRouteComponent: Record<Routes, React.FunctionComponent> = {
   [Routes.Home]: Home,
-  [Routes.Favorites]: Template,
+  // [Routes.Favorites]: Template,
   [Routes.Orders]: Orders,
   [Routes.Rewards]: Rewards,
   [Routes.Balance]: Balance,
