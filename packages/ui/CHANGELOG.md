@@ -1,5 +1,17 @@
 # @billgang/ui
 
+## [3.4.0](https://github.com/mule-stand/billgang/compare/ui-v3.3.0...ui-v3.4.0) (2024-06-17)
+
+
+### Features
+
+* extend statitem and change interface to type ([9f39899](https://github.com/mule-stand/billgang/commit/9f398994b493f03ff3b4d43c35254b6ae78fdda8))
+
+
+### Bug Fixes
+
+* **ui:** release-please test 20 ([2ad9775](https://github.com/mule-stand/billgang/commit/2ad97757df24a46dd89fa68c601e993393b757da))
+
 ## [3.3.0](https://github.com/mule-stand/billgang/compare/ui-v3.2.0...ui-v3.3.0) (2024-05-27)
 
 
